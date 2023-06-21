@@ -31,11 +31,20 @@ $GLOBALS['TL_LANG']['tl_fideid']['datenschutz'] = array('Datenweitergabe an die 
 $GLOBALS['TL_LANG']['tl_fideid']['verein_legend'] = 'Verein';
 $GLOBALS['TL_LANG']['tl_fideid']['verein'] = array('Verein', 'Verein des Antragstellers');
 
+$GLOBALS['TL_LANG']['tl_fideid']['ausweis_legend'] = 'Personalausweis/Geburtsurkunde';
+$GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei(en)', 'Datei(en)');
+
+$GLOBALS['TL_LANG']['tl_fideid']['turnier_legend'] = 'Turnier';
+$GLOBALS['TL_LANG']['tl_fideid']['turnier'] = array('Turnier', 'Turnier, für das der Antrag gestellt wird.');
+
+$GLOBALS['TL_LANG']['tl_fideid']['germany_legend'] = 'Länderkennung GER';
+$GLOBALS['TL_LANG']['tl_fideid']['germany'] = array('GER', 'Länderkennung GER für den Antragsteller.');
+
 $GLOBALS['TL_LANG']['tl_fideid']['intern_legend'] = 'Interne Bemerkungen';
 $GLOBALS['TL_LANG']['tl_fideid']['intern'] = array('Bemerkungen', 'Interne Bemerkungen');
 
 $GLOBALS['TL_LANG']['tl_fideid']['publish_legend'] = 'Bearbeitungsstatus';
-$GLOBALS['TL_LANG']['tl_fideid']['publish'] = array('Fertig', 'Der Antrag wurde fertig bearbeitet.');
+$GLOBALS['TL_LANG']['tl_fideid']['published'] = array('Fertig', 'Der Antrag wurde fertig bearbeitet.');
 
 /**
  * Buttons für Operationen

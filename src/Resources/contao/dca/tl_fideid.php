@@ -421,14 +421,13 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['published'],
 			'inputType'               => 'checkbox',
-			'default'                 => 1,
 			'filter'                  => true,
 			'eval'                    => array
 			(
 				'tl_class'            => 'w50',
 				'isBoolean'           => true
 			),
-			'sql'                     => "char(1) NOT NULL default '1'"
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
 	)
 );

@@ -9,4 +9,4 @@
 /**
  * Backend-Modul Übersetzungen
  */
-$GLOBALS['TL_LANG']['MOD']['fideid'] = array('FIDE-Identifikationsnummern', 'FIDE-Identifikationsnummern');
+$GLOBALS['TL_LANG']['MOD']['fideid'] = array('FIDE-ID-Nummern', 'FIDE-Identifikationsnummern');

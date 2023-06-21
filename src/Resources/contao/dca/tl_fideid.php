@@ -1,0 +1,1134 @@
+<?php
+
+/**
+ * Contao Open Source CMS
+ *
+ * Copyright (c) 2005-2014 Leo Feyer
+ *
+ * @package News
+ * @link    https://contao.org
+ * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ */
+
+
+/**
+ * Table tl_fideid
+ */
+$GLOBALS['TL_DCA']['tl_fideid'] = array
+(
+
+	// Config
+	'config' => array
+	(
+		'dataContainer'               => 'Table',
+		'switchToEdit'                => true, 
+		'enableVersioning'            => true,
+		//'onload_callback' => array
+		//(
+		//	array('tl_fideid', 'applyAdvancedFilter'),
+		//), 
+		//'onsubmit_callback' => array
+		//(
+		//	array('tl_fideid', 'generateAlias'),
+		//	array('tl_fideid', 'saveNewRecordTime')
+		//),
+		'sql' => array
+		(
+			'keys' => array
+			(
+				'id'                 => 'primary',
+				'alias'              => 'index',
+				'birthday'           => 'index',
+				'deathday'           => 'index',
+				'honorpresident'     => 'index',
+				'honormember'        => 'index',
+				'honorgoldpin'       => 'index',
+				'honorsilverpin'     => 'index',
+				'honorgoldbadge'     => 'index',
+				'honorsilverbadge'   => 'index',
+				'honormedal'         => 'index',
+				'honorletter'        => 'index',
+				'honorplate'         => 'index',
+				'honormedal'         => 'index'
+			)
+		)
+	),
+
+	// List
+	'list' => array
+	(
+		'sorting' => array
+		(
+			'mode'                    => 2,
+			'fields'                  => array('alias'),
+			'flag'                    => 1,
+			'panelLayout'             => 'myfilter;filter,sort;search,limit',
+			'panel_callback'          => array('myfilter' => array('tl_fideid', 'generateAdvancedFilter')),  
+		),
+		'label' => array
+		(
+			'fields'                  => array('surname1', 'firstname1', 'birthday', 'deathday', 'tstamp'),
+			'format'                  => '%s, %s',
+			'showColumns'             => true,
+			'label_callback'          => array('tl_fideid', 'listRecords')
+		),
+		'global_operations' => array
+		(
+			'export' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['export'],
+				'href'                => 'key=export',
+				'icon'                => 'bundles/contaospielerregister/images/image.png',
+				'attributes'          => 'onclick="Backend.getScrollOffset();"'
+			),
+			'all' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
+				'href'                => 'act=select',
+				'class'               => 'header_edit_all',
+				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+			)
+		),
+		'operations' => array
+		(
+			'edit' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['edit'],
+				'href'                => 'act=edit',
+				'icon'                => 'edit.gif',
+			),
+			'editImage' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['editImage'],
+				'href'                => 'table=tl_fideid_images',
+				'icon'                => 'bundles/contaospielerregister/images/image.png'
+			),
+			'copy' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['copy'],
+				'href'                => 'act=copy',
+				'icon'                => 'copy.gif',
+				//'button_callback'     => array('tl_fideid', 'copyArchive')
+			),
+			'delete' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['delete'],
+				'href'                => 'act=delete',
+				'icon'                => 'delete.gif',
+				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+				//'button_callback'     => array('tl_fideid', 'deleteArchive')
+			),
+			'toggle' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['toggle'],
+				'icon'                => 'visible.gif',
+				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'button_callback'     => array('tl_fideid', 'toggleIcon')
+			),
+			'show' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['show'],
+				'href'                => 'act=show',
+				'icon'                => 'show.gif'
+			),
+		)
+	),
+
+	// Palettes
+	'palettes' => array
+	(
+		'__selector__'                => array('death'),
+		'default'                     => 'infobox;{namen_legend},surname1,firstname1,title,alias;{namen2_legend:hide},surname2,firstname2,surname3,firstname3,surname4,firstname4;{live_legend},birthday,birthplace,birthday_alt,death,hideLifedata;{photos_legend:hide},multiSRC;{info_legend:hide},shortinfo,longinfo;{link_legend:hide},wikipedia,fide_id,dewis_id,chessgames_id,chess365_id,chess_id,homepage;{star_legend},importance;{fide_legend},gm_title,gm_date,im_title,im_date,wgm_title,wgm_date,wim_title,wim_date;{dsb_legend},honorpresident,honormember,honorgoldpin,honorsilverpin,honorgoldbadge,honorsilverbadge,honorletter,honorplate,honormedal;{intern_legend:hide},intern;{active_legend},nohighlighting,active'
+	),
+
+	// Subpalettes
+	'subpalettes' => array
+	(
+		'death'                       => 'deathday,deathplace,deathday_alt'
+	),
+
+	// Fields
+	'fields' => array
+	(
+		'id' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+		),
+		'tstamp' => array
+		(
+			'flag'                    => 5,
+			'sorting'                 => true,
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'createtime' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'infobox' => array
+		(
+			'exclude'              => true,
+			'input_field_callback' => array('tl_fideid', 'getInfobox')
+		), 
+		'title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['title'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>16, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(16) NOT NULL default ''"
+		),
+		'surname1' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['surname1'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 1,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'surname2' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['surname2'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'surname3' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['surname2'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'surname4' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['surname2'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'firstname1' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['firstname1'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 1,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'firstname2' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['firstname2'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'firstname3' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['firstname2'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'firstname4' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['firstname2'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>32, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'alias' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['alias'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 1,
+			'inputType'               => 'text',
+			'eval'                    => array('rgxp'=>'alias', 'unique'=>false, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
+			'sql'                     => "varbinary(128) NOT NULL default ''"
+		), 
+		'birthday' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['birthday'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'sorting'                 => true,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		'birthday_alt' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['birthday_alt'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		'birthplace' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['birthplace'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		),
+		'deathday' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['deathday'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'sorting'                 => true,
+			'flag'                    => 12,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		'deathday_alt' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['deathday_alt'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		'deathplace' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['deathplace'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		),
+		'death' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['death'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'hideLifedata' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['hideLifedata'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array('boolean'=>true, 'tl_class'=>'clr'),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'multiSRC' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['multiSRC'],
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array
+			(
+				'multiple'            => true, 
+				'fieldType'           => 'checkbox', 
+				'files'               => true, 
+				'isGallery'           => true,
+				'extensions'          => Config::get('validImageTypes'),
+				'mandatory'           => false
+			),
+			'sql'                     => "blob NULL"
+		), 
+		'shortinfo' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['shortinfo'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array('rte'=>'tinyMCE'),
+			'explanation'             => 'insertTags', 
+			'sql'                     => "mediumtext NULL"
+		),
+		'longinfo' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['longinfo'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array('rte'=>'tinyMCE'),
+			'explanation'             => 'insertTags', 
+			'sql'                     => "text NULL"
+		),
+		'wikipedia' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['wikipedia'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		), 
+		'fide_id' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['fide_id'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>10, 'tl_class'=>'w50'),
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'dewis_id' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['dewis_id'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>10, 'tl_class'=>'w50'),
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'chessgames_id' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['chessgames_id'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50 clr'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		), 
+		'chess365_id' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['365chess_id'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		), 
+		'chess_id' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['chess_id'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50 clr'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		), 
+		'homepage' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['homepage'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'long clr'),
+			'sql'                     => "varchar(255) NOT NULL default ''"
+		), 
+		'importance' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['importance'],
+			'exclude'                 => true,
+			'default'                 => 5,
+			'search'                  => false,
+			'filter'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 12,
+			'inputType'               => 'select',
+			'options'                 => array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_fideid'],
+			'sql'                     => "int(2) unsigned NOT NULL default '5'"
+		), 
+		// Person hat GM-Titel der FIDE
+		'gm_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['gm_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des GM-Titels
+		'gm_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['gm_date'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Person hat IM-Titel der FIDE
+		'im_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['im_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des IM-Titels
+		'im_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['im_date'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Person hat WGM-Titel der FIDE
+		'wgm_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['wgm_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des WGM-Titels
+		'wgm_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['wgm_date'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Person hat WIM-Titel der FIDE
+		'wim_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['wim_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des WIM-Titels
+		'wim_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['wim_date'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Ehrenpräsident im Jahr xxxx
+		'honorpresident' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorpresident'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Ehrenmitglied im Jahr xxxx
+		'honormember' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honormember'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Goldene Ehrennadel im Jahr xxxx
+		'honorgoldpin' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorgoldpin'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Silberne Ehrennadel im Jahr xxxx
+		'honorsilverpin' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorsilverpin'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Goldene Ehrenplakette im Jahr xxxx
+		'honorgoldbadge' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorgoldbadge'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Silberne Ehrenplakette im Jahr xxxx
+		'honorsilverbadge' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorsilverbadge'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Ehrenbrief im Jahr xxxx
+		'honorletter' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorletter'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Ehrenteller im Jahr xxxx
+		'honorplate' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honorplate'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Bundesmedaille im Jahr xxxx
+		'honormedal' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['honormedal'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		'intern' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['intern'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array('rte'=>'tinyMCE'),
+			'sql'                     => "text NULL"
+		), 
+		'nohighlighting' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['nohighlighting'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'active' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['active'],
+			'inputType'               => 'checkbox',
+			'default'                 => 1,
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default '1'"
+		),
+	)
+);
+
+
+/**
+ * Class tl_fideid
+ *
+ * Provide miscellaneous methods that are used by the data configuration array.
+ * @copyright  Leo Feyer 2005-2014
+ * @author     Leo Feyer <https://contao.org>
+ * @package    News
+ */
+class tl_fideid extends Backend
+{
+
+	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('BackendUser', 'User');
+	}
+
+	/**
+	 * Datensätze auflisten
+	 * @param array
+	 * @return string
+	 */
+	public function listRecords($row, $label, Contao\DataContainer $dc, $args)
+	{
+		$args[2] = \Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper::getDate($args[2]); // Geburtstag von JJJJMMTT umwandeln in TT.MM.JJJJ
+		$args[3] = \Schachbulle\ContaoSpielerregisterBundle\Klassen\Helper::getDate($args[3]); // Sterbetag von JJJJMMTT umwandeln in TT.MM.JJJJ
+
+		// Datensatz komplett zurückgeben
+		return $args;
+	}
+
+	/**
+	 * Generiert automatisch ein Alias aus allen Vornamen und allen Nachnamen
+	 * @param mixed
+	 * @param \DataContainer
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function generateAlias(DataContainer $dc)
+	{
+		
+		static $suchen = array('Ä', 'Ö', 'Ü', 'ß', 'é', 'ä', 'ö', 'ü');
+		static $ersetzen = array('ae', 'oe', 'ue', 'ss', 'e', 'ae', 'oe', 'ue');
+		
+		$temp = $dc->activeRecord->surname1;
+		if($dc->activeRecord->surname2) $temp .= '-'.$dc->activeRecord->surname2;
+		if($dc->activeRecord->surname3) $temp .= '-'.$dc->activeRecord->surname3;
+		if($dc->activeRecord->surname4) $temp .= '-'.$dc->activeRecord->surname4;
+		if($dc->activeRecord->firstname1) $temp .= '-'.$dc->activeRecord->firstname1;
+		if($dc->activeRecord->firstname2) $temp .= '-'.$dc->activeRecord->firstname2;
+		if($dc->activeRecord->firstname3) $temp .= '-'.$dc->activeRecord->firstname3;
+		if($dc->activeRecord->firstname4) $temp .= '-'.$dc->activeRecord->firstname4;
+
+		if(version_compare(VERSION.BUILD, '4.4', '<'))
+		{
+			// Bei Contao < Version 4.4 ersetzte die Funktion noch die Umlaute
+			$temp = \StringUtil::generateAlias($temp);
+		}
+		else
+		{
+			// In 4.4 werden keine Umlaute ersetzt, ab 4.5 soll das im BE einstellbar sein. Aber ich ersetze sicherheitshalber selber...
+			$temp = str_replace($suchen, $ersetzen, \StringUtil::generateAlias($temp));
+		}
+
+		\Database::getInstance()->prepare("UPDATE tl_fideid SET alias=? WHERE id=?")
+		                        ->execute($temp, $dc->id);
+	}
+
+	/**
+	 * Erstellt bei neuen Datensätzen das Erstellungsdatum
+	 * @param mixed
+	 * @param \DataContainer
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function saveNewRecordTime(DataContainer $dc)
+	{
+		if(!$dc->activeRecord->createtime)
+		{
+			\Database::getInstance()->prepare("UPDATE tl_fideid SET createtime=? WHERE id=?")
+			                        ->execute(time(), $dc->id);
+		}
+	}
+
+
+	public function getInfobox(DataContainer $dc)
+	{
+		// Suchmaschinenlinks generieren
+		$googlelink = 'https://www.google.de/search?q=%22' . $dc->activeRecord->firstname1 . '+' . $dc->activeRecord->surname1 . '%22+schach';
+		$chess365link = 'http://www.365chess.com/search_result.php?wlname=' . $dc->activeRecord->surname1 . '&amp;wname=' . $dc->activeRecord->firstname1 . '&amp;nocolor=on&amp;sply=1&amp;submit_search=1';
+		$chessgameslink = 'http://www.chessgames.com/perl/ezsearch.pl?search=' . $dc->activeRecord->surname1;
+		$chesslink = 'https://www.chess.com/games/search?sort=6&amp;p1=' . $dc->activeRecord->surname1 . '+' . $dc->activeRecord->firstname1;
+
+		// Popuplink generieren
+		$popuplink = 'contao/main.php?do=spielerregister&amp;table=tl_fideid_images&amp;id=' . $dc->activeRecord->id . '&amp;popup=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->activeRecord->id) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':840,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->activeRecord->id))) . '\',\'url\':this.href});return false';
+
+		// Vorhandene Bilder anzeigen
+		$bilder = '';
+		$objImages = $this->Database->prepare('SELECT * FROM tl_fideid_images WHERE pid = ?')
+		                           ->execute($dc->activeRecord->id);
+		if($objImages->numRows)
+		{
+			while($objImages->next()) 
+			{
+				$objFile = \FilesModel::findByPk($objImages->singleSRC);
+				$thumbnail = Image::get($objFile->path, 20, 20, 'crop'); 
+				$bilder .= '<img src="' . $thumbnail . '" /> ';
+			}
+		}
+
+		// Fotolink generieren
+		if($bilder)
+			$fotolink = 'Fotos bearbeiten: <a href="' . $popuplink . '">'.$bilder.'</a>';
+		else
+			$fotolink = '<a href="' . $popuplink . '">Fotos bearbeiten</a>';
+		
+		$string = '
+<div class="widget long">
+  <h3><label>Infobox</label></h3>
+  <p>Spieler suchen in: <a href="' . $googlelink . '" target="_blank">Google</a> |
+  <a href="' . $chess365link . '" target="_blank">365chess.com</a> |
+  <a href="' . $chessgameslink . '" target="_blank">chessgames.com</a> |
+  <a href="' . $chesslink . '" target="_blank">chess.com</a></p>
+  <p>'.$fotolink.'</p>
+</div>'; 
+		
+		return $string;
+	}
+
+/*
+https://community.contao.org/de/showthread.php?48275-DCA-Filter-erstellen-von-Child-Table
+*/
+	
+	public function generateAdvancedFilter(DataContainer $dc)
+	{
+	
+		if (\Input::get('id') > 0) {
+			return '';
+		}
+		
+		$session = \Session::getInstance()->getData();
+		
+		// Filters
+		$arrFilters = array
+		(
+			'spr_filter'   => array
+			(
+				'name'    => 'spr_filter',
+				'label'   => $GLOBALS['TL_LANG']['tl_fideid']['filter_extended'],
+				'options' => array
+				(
+					'10' => $GLOBALS['TL_LANG']['tl_fideid']['filter_roundbirthdays'],
+					'1'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_over100'], 
+					'2'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_birthdayfail'],
+					'3'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_deathdayfail'],
+					'4'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_birthdayerror'],
+					'5'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_deathdayerror'],
+					'8'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_birthplacefail'],
+					'9'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_deathplacefail'],
+					'6'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_shortinfo'],
+					'7'  => $GLOBALS['TL_LANG']['tl_fideid']['filter_firstnamefail'],
+				)
+			),
+		);
+
+        $strBuffer = '
+<div class="tl_filter spr_filter tl_subpanel">
+<strong>' . $GLOBALS['TL_LANG']['tl_fideid']['filter'] . ':</strong> ' . "\n";
+
+        // Generate filters
+        foreach ($arrFilters as $arrFilter) {
+            $strOptions = '
+  <option value="' . $arrFilter['name'] . '">' . $arrFilter['label'] . '</option>
+  <option value="' . $arrFilter['name'] . '">---</option>' . "\n";
+
+            // Generate options
+            foreach ($arrFilter['options'] as $k => $v) {
+                $strOptions .= '  <option value="' . $k . '"' . (($session['filter']['tl_registerFilter'][$arrFilter['name']] === (string) $k) ? ' selected' : '') . '>' . $v . '</option>' . "\n";
+            }
+
+            $strBuffer .= '<select name="' . $arrFilter['name'] . '" id="' . $arrFilter['name'] . '" class="tl_select' . (isset($session['filter']['tl_registerFilter'][$arrFilter['name']]) ? ' active' : '') . '">
+' . $strOptions . '
+</select>' . "\n";	
+		}
+
+		return $strBuffer . '</div>'; 
+
+	}
+
+	public function applyAdvancedFilter()
+	{
+	
+		$session = $this->Session->getData();
+		
+		// Store filter values in the session
+		foreach ($_POST as $k => $v) {
+			if (substr($k, 0, 4) != 'spr_') {
+				continue;
+			}
+			
+			// Reset the filter
+			if ($k == \Input::post($k)) {
+				unset($session['filter']['tl_registerFilter'][$k]);
+			} // Apply the filter
+			else {
+				$session['filter']['tl_registerFilter'][$k] = \Input::post($k);
+			}
+		}
+		
+		$this->Session->setData($session);
+		
+		if (\Input::get('id') > 0 || !isset($session['filter']['tl_registerFilter'])) {
+			return;
+		}
+		
+		$arrPlayers = null;
+		
+		
+		switch ($session['filter']['tl_registerFilter']['spr_filter'])
+		{
+			case '1': // Älter als 100 Jahre, nicht verstorben
+				$hundertjahre = date("Ymd") - 1000000; // Aktuelles Datum minus 100 Jahre
+				$verstorben = false; // Nicht verstorben
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE birthday <= ? AND birthday != ? AND death = ?")
+				                                      ->execute($hundertjahre, 0, $verstorben);
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '2': // Geburtsdatum fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE birthday = ?")
+				                                      ->execute(0);
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '3': // Sterbedatum fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE deathday = ? AND death = ?")
+				                                      ->execute(0, 1);
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '4': // Geburtsdatum unvollständig
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE birthday % 100 = ? AND birthday != ?")
+				                                      ->execute(0, 0);
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '5': // Sterbedatum unvollständig
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE deathday % 100 = ? AND deathday != ? AND death = ?")
+				                                      ->execute(0, 0, 1);
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '6': // Kurzinfo fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE shortinfo = ?")
+				                                      ->execute('');
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '7': // Vorname fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE firstname1 = ?")
+				                                      ->execute('');
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '8': // Geburtsort fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE birthplace = ?")
+				                                      ->execute('');
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '9': // Sterbeort fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE deathplace = ? AND death = ?")
+				                                      ->execute('', 1);
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			case '10': // Runde Geburtstage von lebenden Personen im aktuellen Jahr (30,40,50,60,65,70,75,80,85,90,95,100)
+				$jahr = date("Y"); // Aktuelles Jahr
+				$jahr30 = $jahr - 30;
+				$jahr40 = $jahr - 40;
+				$jahr50 = $jahr - 50;
+				$jahr60 = $jahr - 60;
+				$jahr65 = $jahr - 65;
+				$jahr70 = $jahr - 70;
+				$jahr75 = $jahr - 75;
+				$jahr80 = $jahr - 80;
+				$jahr85 = $jahr - 85;
+				$jahr90 = $jahr - 90;
+				$jahr95 = $jahr - 95;
+				$jahr100 = $jahr - 100;
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_fideid WHERE (SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ?) AND death = ?")
+				                                      ->execute($jahr30, $jahr40, $jahr50, $jahr60, $jahr65, $jahr70, $jahr75, $jahr80, $jahr85, $jahr90, $jahr95, $jahr100, '');
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			
+			default:
+		}
+		
+		if (is_array($arrPlayers) && empty($arrPlayers)) {
+			$arrPlayers = array(0);
+		}
+		
+		$GLOBALS['TL_DCA']['tl_fideid']['list']['sorting']['root'] = $arrPlayers; 
+	
+	}
+	
+	/**
+	 * Ändert das Aussehen des Toggle-Buttons.
+	 * @param $row
+	 * @param $href
+	 * @param $label
+	 * @param $title
+	 * @param $icon
+	 * @param $attributes
+	 * @return string
+	 */
+	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+	{
+		$this->import('BackendUser', 'User');
+		
+		if (strlen($this->Input->get('tid')))
+		{
+			$this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 0));
+			$this->redirect($this->getReferer());
+		}
+		
+		// Check permissions AFTER checking the tid, so hacking attempts are logged
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_fideid::active', 'alexf'))
+		{
+			return '';
+		}
+		
+		$href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+		
+		if (!$row['active'])
+		{
+			$icon = 'invisible.gif';
+		}
+		
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+	}
+
+	/**
+	 * Toggle the visibility of an element
+	 * @param integer
+	 * @param boolean
+	 */
+	public function toggleVisibility($intId, $blnPublished)
+	{
+		// Check permissions to publish
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_fideid::active', 'alexf'))
+		{
+			$this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_fideid toggleVisibility', TL_ERROR);
+			$this->redirect('contao/main.php?act=error');
+		}
+		
+		$this->createInitialVersion('tl_fideid', $intId);
+		
+		// Trigger the save_callback
+		if (is_array($GLOBALS['TL_DCA']['tl_fideid']['fields']['active']['save_callback']))
+		{
+			foreach ($GLOBALS['TL_DCA']['tl_fideid']['fields']['active']['save_callback'] as $callback)
+			{
+				$this->import($callback[0]);
+				$blnPublished = $this->$callback[0]->$callback[1]($blnPublished, $this);
+			}
+		}
+		
+		// Update the database
+		$this->Database->prepare("UPDATE tl_fideid SET tstamp=". time() .", active='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+		               ->execute($intId);
+		$this->createNewVersion('tl_fideid', $intId);
+	}
+}

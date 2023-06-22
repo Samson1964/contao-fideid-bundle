@@ -271,7 +271,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			(
 				array('tl_fideid', 'loadDate')
 			),
-			'sql'                     => "int(10) unsigned NOT NULL default 0"
+			'sql'                     => "int(12) signed NOT NULL default 0"
 		),
 		'geschlecht' => array
 		(

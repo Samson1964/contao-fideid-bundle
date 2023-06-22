@@ -38,16 +38,16 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		'sorting' => array
 		(
 			'mode'                    => 1,
-			'fields'                  => array('tstamp'),
+			'fields'                  => array('formulardatum'),
 			'flag'                    => 1,
 			'panelLayout'             => 'filter,sort;search,limit',
 		),
 		'label' => array
 		(
-			'fields'                  => array('nachname', 'vorname', 'geburtsdatum'),
+			'fields'                  => array('formulardatum', 'nachname', 'vorname', 'geburtsdatum'),
 			'format'                  => '%s, %s',
 			'showColumns'             => true,
-			//'label_callback'          => array('tl_fideid', 'listRecords')
+			'label_callback'          => array('tl_fideid', 'listRecords')
 		),
 		'global_operations' => array
 		(
@@ -108,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{infobox_legend:hide},infobox;{auftraggeber_legend},nachname_person,vorname_person,email_person,art;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{fide_id_legend:hide},fide_id;{antragsteller_multiple_legend:hide},antragsteller;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{intern_legend:hide},intern;{publish_legend},published'
+		'default'                     => '{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{auftraggeber_legend},nachname_person,vorname_person,email_person,art;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{fide_id_legend:hide},fide_id;{antragsteller_multiple_legend:hide},antragsteller;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{intern_legend:hide},intern;{publish_legend},published'
 	),
 
 	// Subpalettes
@@ -135,12 +135,31 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'exclude'              => true,
 			'input_field_callback' => array('tl_fideid', 'getInfobox')
 		),
+		'formulardatum' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['formulardatum'],
+			'flag'                    => 7,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'rgxp'                => 'datim',
+				'mandatory'           => true,
+				'doNotCopy'           => true,
+				'datepicker'          => true,
+				'tl_class'            => 'w50 wizard'
+			),
+			//'load_callback' => array
+			//(
+			//	array('tl_fideid', 'loadDate')
+			//),
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
 		'nachname_person' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['nachname_person'],
 			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'text',
 			'eval'                    => array
@@ -155,8 +174,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['vorname_person'],
 			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'text',
 			'eval'                    => array
@@ -172,9 +191,10 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['email_person'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
-			'sorting'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
 			'flag'                    => 1,
-			'search'                  => true,
+			'search'                  => false,
 			'eval'                    => array
 			(
 				'mandatory'           => true,
@@ -188,7 +208,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['art'],
 			'exclude'                 => true,
-			'search'                  => true,
+			'filter'                  => true,
 			'sorting'                 => true,
 			'flag'                    => 1,
 			'inputType'               => 'select',
@@ -238,8 +258,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['titel'],
 			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'select',
 			'options'                 => &$GLOBALS['TL_LANG']['tl_fideid']['titel_optionen'],
@@ -255,8 +275,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		'geburtsdatum' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['geburtsdatum'],
-			'filter'                  => true,
-			'sorting'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
 			'flag'                    => 7,
 			'inputType'               => 'text',
 			'eval'                    => array
@@ -277,8 +297,9 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['geschlecht'],
 			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
+			'search'                  => false,
+			'sorting'                 => false,
+			'filter'                  => true,
 			'inputType'               => 'select',
 			'options'                 => &$GLOBALS['TL_LANG']['tl_fideid']['geschlecht_optionen'],
 			'eval'                    => array
@@ -295,7 +316,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['email'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
-			'sorting'                 => true,
+			'search'                  => true,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'search'                  => true,
 			'eval'                    => array
@@ -332,7 +354,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['verein'],
 			'exclude'                 => true,
 			'search'                  => true,
-			'sorting'                 => true,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'text',
 			'eval'                    => array
@@ -374,7 +396,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['turnier'],
 			'exclude'                 => true,
 			'search'                  => true,
-			'sorting'                 => true,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'text',
 			'eval'                    => array
@@ -397,13 +419,11 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
-
-
 		'fide_id' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['fide_id'],
 			'exclude'                 => true,
-			'search'                  => false,
+			'search'                  => true,
 			'inputType'               => 'text',
 			'eval'                    => array('maxlength'=>10, 'tl_class'=>'w50'),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
@@ -456,14 +476,57 @@ class tl_fideid extends Backend
 	public function getInfobox(DataContainer $dc)
 	{
 
+		$arrOptions = array
+		(
+			'validChars' => 'A-Za-z0-9',
+			'locale'     => 'de',
+			'delimiter'  => '-'
+		);
+		$nachname = \Contao\System::getContainer()->get('contao.slug')->generate($dc->activeRecord->nachname, $arrOptions);  
+		$vorname = \Contao\System::getContainer()->get('contao.slug')->generate($dc->activeRecord->vorname, $arrOptions);  
+
+		$ausgabe = $nachname.', ';
+		$ausgabe .= $vorname;
+		if($dc->activeRecord->titel) $ausgabe .= ', '.$dc->activeRecord->titel;
+		$ausgabe .= '; ';
+		$ausgabe .= date('Y-m-d', $dc->activeRecord->geburtsdatum).'; ';
+		switch($dc->activeRecord->geschlecht)
+		{
+			case 'W':
+				$ausgabe .= 'F';
+				break;
+			default:
+				$ausgabe .= $dc->activeRecord->geschlecht;
+		}
+		
 		$string = '
 <div class="widget long">
-  <h3><label>String für FIDE-System</label></h3>
-  <p>...</p>
+  <p><b>'.$ausgabe.'</b></p>
 </div>';
 
 		return $string;
 	}
+
+	/**
+	 * Datensätze auflisten
+	 * @param array
+	 * @return string
+	 */
+	public function listRecords($row, $label, \DataContainer $dc, $args)
+	{
+		// Zeile rot markieren, wenn Datensatz unbearbeitet ist
+		if(!$row['published'])
+		{
+			for($x = 0; $x < count($args); $x++)
+			{
+				$args[$x] = '<span style="color:red;">'.$args[$x].'</span>';
+			}
+		}
+
+		// Datensatz komplett zurückgeben
+		return $args;
+	}
+
 
 	/**
 	 * Set the timestamp to 00:00:00 (see #26)

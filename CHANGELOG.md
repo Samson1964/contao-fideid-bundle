@@ -1,5 +1,12 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.1.0 (2023-06-22)
+
+* Add: tl_fideid.formulardatum -> Ungefährer Versandzeitpunkt des Antrags
+* Change: tl_fideid.infobox -> String für FIDE-System generieren
+* Change: Felder für Filter, Sortierung, Suche optimiert
+* Add: Datensatz wird mit roter Schrift ausgegeben in Übersicht, wenn unbearbeitet.
+
 ## Version 0.0.4 (2023-06-22)
 
 * Change tl_fideid.geburtsdatum -> SQL geändert von int(10) unsigned auf int(12) signed, um auch negative Zahlen verwenden zu können

@@ -5,6 +5,9 @@
  */
 $GLOBALS['TL_LANG']['tl_fideid']['infobox_legend'] = 'String für das FIDE-System';
 
+$GLOBALS['TL_LANG']['tl_fideid']['formular_legend'] = 'Antragszeitpunkt';
+$GLOBALS['TL_LANG']['tl_fideid']['formulardatum'] = array('Antrag vom', 'Datum und Uhrzeit des Formularversands.');
+
 $GLOBALS['TL_LANG']['tl_fideid']['auftraggeber_legend'] = 'Auftraggeber/Kontakt';
 $GLOBALS['TL_LANG']['tl_fideid']['nachname_person'] = array('Nachname', 'Geben Sie hier den Nachnamen des Auftraggebers ein.');
 $GLOBALS['TL_LANG']['tl_fideid']['vorname_person'] = array('Vorname', 'Geben Sie hier den Vornamen des Auftraggebers ein.');
@@ -33,6 +36,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['verein'] = array('Verein', 'Verein des Antrags
 
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis_legend'] = 'Personalausweis/Geburtsurkunde';
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei(en)', 'Datei(en)');
+$GLOBALS['TL_LANG']['tl_fideid']['elterneinverstaendnis'] = array('Zustimmung Erziehungsberechtigte(r)', 'Zustimmung des/der Erziehungsberechtigten liegt vor.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['turnier_legend'] = 'Turnier';
 $GLOBALS['TL_LANG']['tl_fideid']['turnier'] = array('Turnier', 'Turnier, für das der Antrag gestellt wird.');

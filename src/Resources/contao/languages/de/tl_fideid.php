@@ -3,12 +3,18 @@
 /**
  * Backend-Modul: Übersetzungen im Eingabeformular
  */
+$GLOBALS['TL_LANG']['tl_fideid']['tstamp'] = array('Bearbeitet', 'Datum der letzten Bearbeitung.');
+
+$GLOBALS['TL_LANG']['tl_fideid']['status_legend'] = 'Bearbeitungsstatus';
+$GLOBALS['TL_LANG']['tl_fideid']['status'] = array('Status', 'Status der Bearbeitung auswählen.');
+
 $GLOBALS['TL_LANG']['tl_fideid']['infobox_legend'] = 'String für das FIDE-System';
 
 $GLOBALS['TL_LANG']['tl_fideid']['formular_legend'] = 'Antragszeitpunkt';
 $GLOBALS['TL_LANG']['tl_fideid']['formulardatum'] = array('Antrag vom', 'Datum und Uhrzeit des Formularversands.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['auftraggeber_legend'] = 'Auftraggeber/Kontakt';
+$GLOBALS['TL_LANG']['tl_fideid']['antragsteller_ungleich_person'] = array('Abweichender Auftraggeber', 'Vom Antragsteller abweichender Auftraggeber');
 $GLOBALS['TL_LANG']['tl_fideid']['nachname_person'] = array('Nachname', 'Geben Sie hier den Nachnamen des Auftraggebers ein.');
 $GLOBALS['TL_LANG']['tl_fideid']['vorname_person'] = array('Vorname', 'Geben Sie hier den Vornamen des Auftraggebers ein.');
 $GLOBALS['TL_LANG']['tl_fideid']['email_person'] = array('E-Mail', 'Geben Sie hier die E-Mail-Adresse des Auftraggebers ein.');
@@ -25,9 +31,6 @@ $GLOBALS['TL_LANG']['tl_fideid']['email'] = array('E-Mail', 'Geben Sie hier die 
 $GLOBALS['TL_LANG']['tl_fideid']['fide_id_legend'] = 'FIDE-Identifikationsnummer';
 $GLOBALS['TL_LANG']['tl_fideid']['fide_id'] = array('FIDE-Identifikationsnummer', 'Zugeteilte FIDE-Identifikationsnummer');
 
-$GLOBALS['TL_LANG']['tl_fideid']['antragsteller_multiple_legend'] = 'Mehrere Antragsteller';
-$GLOBALS['TL_LANG']['tl_fideid']['antragsteller'] = array('Antragsteller', 'Je Zeile ein Antragsteller');
-
 $GLOBALS['TL_LANG']['tl_fideid']['datenschutz_legend'] = 'Datenschutz';
 $GLOBALS['TL_LANG']['tl_fideid']['datenschutz'] = array('Datenweitergabe an die FIDE', 'Der Antragsteller willigt ein, daß der Deutsche Schachbund die Daten an die FIDE weitergibt.');
 
@@ -43,6 +46,9 @@ $GLOBALS['TL_LANG']['tl_fideid']['turnier'] = array('Turnier', 'Turnier, für da
 
 $GLOBALS['TL_LANG']['tl_fideid']['germany_legend'] = 'Länderkennung GER';
 $GLOBALS['TL_LANG']['tl_fideid']['germany'] = array('GER', 'Länderkennung GER für den Antragsteller.');
+
+$GLOBALS['TL_LANG']['tl_fideid']['bemerkungen_legend'] = 'Bemerkungen/Hinweise';
+$GLOBALS['TL_LANG']['tl_fideid']['bemerkungen'] = array('Bemerkung', 'Bemerkungen des Formularabsenders');
 
 $GLOBALS['TL_LANG']['tl_fideid']['intern_legend'] = 'Interne Bemerkungen';
 $GLOBALS['TL_LANG']['tl_fideid']['intern'] = array('Bemerkungen', 'Interne Bemerkungen');
@@ -64,13 +70,21 @@ $GLOBALS['TL_LANG']['tl_fideid']['show'] = array('Antragsdetails anzeigen', 'Det
  * Select-Felder
  */
 
+$GLOBALS['TL_LANG']['tl_fideid']['status_optionen'] = array
+(
+	'0' => 'Unbearbeitet',
+	'1' => 'Daten unvollständig',
+	'2' => 'Daten vollständig, FIDE-ID festlegen',
+	'3' => 'FIDE-ID versenden',
+	'4' => 'Fertig',
+);
+
 $GLOBALS['TL_LANG']['tl_fideid']['art_optionen'] = array
 (
 	'Mitglied'          => 'Der Antragsteller ist DSB-Vereinsmitglied und über 18 Jahre alt',
 	'Mitglied_u18'      => 'Der Antragsteller ist DSB-Vereinsmitglied und unter 18 Jahre alt',
 	'Kein_Mitglied'     => 'Der Antragsteller ist vereinslos und über 18 Jahre alt',
 	'Kein_Mitglied_u18' => 'Der Antragsteller ist vereinslos und unter 18 Jahre alt',
-	'Turnierleiter'     => 'Ich bin Turnierleiter und möchte mehrere ID\'s beantragen',
 );
 
 $GLOBALS['TL_LANG']['tl_fideid']['titel_optionen'] = array

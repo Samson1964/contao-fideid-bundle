@@ -40,11 +40,11 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'mode'                    => 1,
 			'fields'                  => array('formulardatum'),
 			'flag'                    => 1,
-			'panelLayout'             => 'filter,sort;search,limit',
+			'panelLayout'             => 'sort,filter;search,limit',
 		),
 		'label' => array
 		(
-			'fields'                  => array('formulardatum', 'nachname', 'vorname', 'geburtsdatum'),
+			'fields'                  => array('formulardatum', 'nachname', 'vorname', 'geburtsdatum', 'tstamp'),
 			'format'                  => '%s, %s',
 			'showColumns'             => true,
 			'label_callback'          => array('tl_fideid', 'listRecords')
@@ -82,20 +82,6 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
 				//'button_callback'     => array('tl_fideid', 'deleteArchive')
 			),
-			'toggle' => array
-			(
-				'label'                => &$GLOBALS['TL_LANG']['tl_fideid']['toggle'],
-				'attributes'           => 'onclick="Backend.getScrollOffset()"',
-				'haste_ajax_operation' => array
-				(
-					'field'            => 'published',
-					'options'          => array
-					(
-						array('value' => '', 'icon' => 'invisible.svg'),
-						array('value' => '1', 'icon' => 'visible.svg'),
-					),
-				),
-			),
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['show'],
@@ -108,13 +94,14 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{auftraggeber_legend},nachname_person,vorname_person,email_person,art;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{fide_id_legend:hide},fide_id;{antragsteller_multiple_legend:hide},antragsteller;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{intern_legend:hide},intern;{publish_legend},published'
+		'__selector__'                => array('antragsteller_ungleich_person'),
+		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		'death'                       => 'deathday,deathplace,deathday_alt'
+		'antragsteller_ungleich_person' => 'nachname_person,vorname_person,email_person,'
 	),
 
 	// Fields
@@ -126,9 +113,25 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		),
 		'tstamp' => array
 		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['tstamp'],
 			'flag'                    => 5,
 			'sorting'                 => true,
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'status' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['status'],
+			'exclude'                 => true,
+			'filter'                  => true,
+			'inputType'               => 'select',
+			'options'                 => array(0, 1, 2, 3, 4),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_fideid']['status_optionen'],
+			'eval'                    => array
+			(
+				'mandatory'           => true,
+				'tl_class'            => 'long'
+			),
+			'sql'                     => "varchar(1) NOT NULL default '0'"
 		),
 		'infobox' => array
 		(
@@ -153,6 +156,14 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			//	array('tl_fideid', 'loadDate')
 			//),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'antragsteller_ungleich_person' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['antragsteller_ungleich_person'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'nachname_person' => array
 		(
@@ -234,7 +245,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			(
 				'mandatory'           => true,
 				'maxlength'           => 32,
-				'tl_class'            => 'w50'
+				'tl_class'            => 'w50 clr'
 			),
 			'sql'                     => "varchar(32) NOT NULL default ''"
 		),
@@ -329,14 +340,6 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
-		'antragsteller' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['antragsteller'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'inputType'               => 'textarea',
-			'sql'                     => "text NULL"
-		),
 		'datenschutz' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['datenschutz'],
@@ -419,6 +422,14 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
+		'bemerkungen' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['bemerkungen'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'sql'                     => "text NULL"
+		),
 		'fide_id' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['fide_id'],
@@ -436,18 +447,6 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'inputType'               => 'textarea',
 			'eval'                    => array('rte'=>'tinyMCE'),
 			'sql'                     => "text NULL"
-		),
-		'published' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['published'],
-			'inputType'               => 'checkbox',
-			'filter'                  => true,
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50',
-				'isBoolean'           => true
-			),
-			'sql'                     => "char(1) NOT NULL default ''"
 		),
 	)
 );
@@ -514,13 +513,18 @@ class tl_fideid extends Backend
 	 */
 	public function listRecords($row, $label, \DataContainer $dc, $args)
 	{
-		// Zeile rot markieren, wenn Datensatz unbearbeitet ist
-		if(!$row['published'])
+		// Farben festlegen
+		$farbe = array(
+			'0' => '#FF0000',
+			'1' => '#F24F00',
+			'2' => '#808000',
+			'3' => '#808080',
+			'4' => '#008000',
+		);
+		// Farbe für Zeile setzen
+		for($x = 0; $x < count($args); $x++)
 		{
-			for($x = 0; $x < count($args); $x++)
-			{
-				$args[$x] = '<span style="color:red;">'.$args[$x].'</span>';
-			}
+			$args[$x] = '<span style="color:'.$farbe[$row['status']].';">'.$args[$x].'</span>';
 		}
 
 		// Datensatz komplett zurückgeben

@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.1 (2023-06-26)
+
+* Fix: Der storeFormData-Hook hat keine Daten zurückgegeben
+* Fix: Übersetzungen ausweis-Feld korrigiert
+
 ## Version 0.2.0 (2023-06-26)
 
 * Change: Farbliche Kennzeichnung Bearbeitungsstatus kontrastreicher gemacht

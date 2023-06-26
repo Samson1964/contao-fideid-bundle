@@ -29,6 +29,6 @@ class SaveAusweis extends \Controller
 			$arrSet['ausweis'] = $objFile->uuid;
 			//log_message(print_r($arrSet,true),'ausweis.log');
 		}
-		
+		return $arrSet;
 	}
 }

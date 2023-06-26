@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['verein_legend'] = 'Verein';
 $GLOBALS['TL_LANG']['tl_fideid']['verein'] = array('Verein', 'Verein des Antragstellers');
 
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis_legend'] = 'Personalausweis/Geburtsurkunde';
-$GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei(en)', 'Datei(en)');
+$GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei', 'Datei auswählen');
 $GLOBALS['TL_LANG']['tl_fideid']['elterneinverstaendnis'] = array('Zustimmung Erziehungsberechtigte(r)', 'Zustimmung des/der Erziehungsberechtigten liegt vor.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['turnier_legend'] = 'Turnier';

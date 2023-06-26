@@ -141,7 +141,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		'formulardatum' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['formulardatum'],
-			'flag'                    => 7,
+			'flag'                    => 6,
 			'inputType'               => 'text',
 			'eval'                    => array
 			(

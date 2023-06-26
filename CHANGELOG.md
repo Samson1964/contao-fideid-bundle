@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.2 (2023-06-26)
+
+* Fix: tl_fideid.formulardatum abwärts statt aufwärts sortieren
+* Add: Ausgabe ausweis.log aktiviert, um zu sehen ob elterneinverstaendnis korrekt da ist.
+
 ## Version 0.2.1 (2023-06-26)
 
 * Fix: Der storeFormData-Hook hat keine Daten zurückgegeben

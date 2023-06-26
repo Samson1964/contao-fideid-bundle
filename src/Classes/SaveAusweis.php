@@ -21,14 +21,16 @@ class SaveAusweis extends \Controller
 	 */
 	public function storeFormData($arrSet, \Form $objForm)
 	{
-		//log_message(print_r($arrSet,true),'ausweis.log');
+		log_message('Vor storeFormData:','ausweis.log');
+		log_message(print_r($arrSet,true),'ausweis.log');
 		if($arrSet['ausweis'] && substr($arrSet['ausweis'], 0, 6) == 'files/')
 		{
 			// Uploadfeld ausweis gefunden, UUID ermitteln und eintragen
 			$objFile = \Dbafs::addResource($arrSet['ausweis']);
 			$arrSet['ausweis'] = $objFile->uuid;
-			//log_message(print_r($arrSet,true),'ausweis.log');
 		}
+		log_message('Nach storeFormData:','ausweis.log');
+		log_message(print_r($arrSet,true),'ausweis.log');
 		return $arrSet;
 	}
 }

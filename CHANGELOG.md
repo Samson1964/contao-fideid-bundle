@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.5 (2023-06-26)
+
+* Fix: PHP-Fehler in Zeile 36 SaveAusweis
+
 ## Version 0.2.4 (2023-06-26)
 
 * Add: Prüffunktion im storeFormData-Hook, ob beide E-Mail-Adressen angegeben sind. Contao versendet nur Mails, wenn ein angegebenes Token auch existiert.

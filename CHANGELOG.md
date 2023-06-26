@@ -1,5 +1,11 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.3 (2023-06-26)
+
+* Fix: tl_fideid.verein -> kein Pflichtfeld!
+* Fix: tl_fideid.turnier -> kein Pflichtfeld!
+* Add: tl_fideid.abschnitt -> Hilfsfeld für die Formularposition
+
 ## Version 0.2.2 (2023-06-26)
 
 * Fix: tl_fideid.formulardatum abwärts statt aufwärts sortieren

@@ -118,6 +118,10 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'sorting'                 => true,
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
+		'abschnitt' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
 		'status' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['status'],
@@ -362,7 +366,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => true,
+				'mandatory'           => false,
 				'maxlength'           => 255,
 				'tl_class'            => 'w50'
 			),
@@ -404,7 +408,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => true,
+				'mandatory'           => false,
 				'maxlength'           => 255,
 				'tl_class'            => 'w50'
 			),

@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.4 (2023-06-26)
+
+* Add: Prüffunktion im storeFormData-Hook, ob beide E-Mail-Adressen angegeben sind. Contao versendet nur Mails, wenn ein angegebenes Token auch existiert.
+
 ## Version 0.2.3 (2023-06-26)
 
 * Fix: tl_fideid.verein -> kein Pflichtfeld!

@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.0 (2023-06-26)
+
+* Change: Farbliche Kennzeichnung Bearbeitungsstatus kontrastreicher gemacht
+* Add: Helper-Klasse SaveAusweis, um Datei-Uploads des Formulars abzufangen und den Upload entsprechend aufzubereiten (UUID erstellen)
+
 ## Version 0.1.1 (2023-06-25)
 
 * Delete: Toggle-Icon, da es ersetzt wird durch eine Status-Auswahlliste

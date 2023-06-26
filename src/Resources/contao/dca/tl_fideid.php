@@ -375,12 +375,12 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'inputType'               => 'fileTree',
 			'eval'                    => array
 			(
-				'filesOnly'           => true,
-				'extensions'          => Config::get('validImageTypes'),
-				'fieldType'           => 'radio',
-				'mandatory'           => false
+				'filesOnly'           => true, 
+				'fieldType'           => 'radio', 
+				'mandatory'           => false, 
+				'tl_class'            => 'clr'
 			),
-			'sql'                     => "binary(16) NULL"
+			'sql'                     => "binary(16) NULL",
 		),
 		'elterneinverstaendnis' => array
 		(
@@ -516,9 +516,9 @@ class tl_fideid extends Backend
 		// Farben festlegen
 		$farbe = array(
 			'0' => '#FF0000',
-			'1' => '#F24F00',
-			'2' => '#808000',
-			'3' => '#808080',
+			'1' => '#919100',
+			'2' => '#009595',
+			'3' => '#0000A0',
 			'4' => '#008000',
 		);
 		// Farbe für Zeile setzen

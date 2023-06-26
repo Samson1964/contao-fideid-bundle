@@ -19,3 +19,8 @@ $GLOBALS['BE_MOD']['content']['fideid'] = array
 	'tables'         => array('tl_fideid'),
 	'icon'           => 'bundles/contaofideid/images/icon.png',
 );
+
+/**
+ * Hooks
+ */
+$GLOBALS['TL_HOOKS']['storeFormData'][] = array('Schachbulle\ContaoFideidBundle\Classes\SaveAusweis', 'storeFormData');

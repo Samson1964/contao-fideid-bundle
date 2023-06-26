@@ -32,9 +32,6 @@ class SaveAusweis extends \Controller
 			$arrSet['ausweis'] = $objFile->uuid;
 		}
 
-		// Wenn Auftraggeber-E-Mail nicht vorhanden ist, muﬂ diese auf Antragsteller-E-Mail ge‰ndert werden
-		if(!isset($arrSet['email_person'])) $arrSet['email_person'] = $arrSet['email'];
-
 		log_message('Nach storeFormData:','ausweis.log');
 		log_message(print_r($arrSet,true),'ausweis.log');
 

@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.2.6 (2023-06-26)
+
+* Fix: Änderungen aus Version 0.2.4 rückgängig gemacht, da der storeFormData-Hook erst nach dem E-Mail-Versand aktiv wird.
+* Add: Helper-Klasse CopyEmail, um E-Mail-Adresse des Antragstellers zum Auftraggeber zu kopieren -> Fehler "Could not set reply-to address ##form_email_person## for message ID 58: Address in mailbox given [##form_email_person##] does not comply with RFC 2822, 3.6.2." (Funktion NotificationCenter\Gateway\Email::sendDraft) verhindern
+
 ## Version 0.2.5 (2023-06-26)
 
 * Fix: PHP-Fehler in Zeile 36 SaveAusweis

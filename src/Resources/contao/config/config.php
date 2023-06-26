@@ -24,3 +24,4 @@ $GLOBALS['BE_MOD']['content']['fideid'] = array
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['storeFormData'][] = array('Schachbulle\ContaoFideidBundle\Classes\SaveAusweis', 'storeFormData');
+$GLOBALS['TL_HOOKS']['prepareFormData'][] = array('Schachbulle\ContaoFideidBundle\Classes\CopyEmail', 'prepareFormData');

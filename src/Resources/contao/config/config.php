@@ -16,7 +16,7 @@
  */
 $GLOBALS['BE_MOD']['content']['fideid'] = array
 (
-	'tables'         => array('tl_fideid'),
+	'tables'         => array('tl_fideid', 'tl_fideid_templates'),
 	'icon'           => 'bundles/contaofideid/images/icon.png',
 );
 

@@ -51,6 +51,13 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		),
 		'global_operations' => array
 		(
+			'templates' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['templates'],
+				'href'                => 'table=tl_fideid_templates',
+				'icon'                => 'bundles/contaofideid/images/templates.png',
+				'attributes'          => 'onclick="Backend.getScrollOffset();"'
+			),
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
@@ -95,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('antragsteller_ungleich_person'),
-		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern'
+		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,ausweisbox,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern'
 	),
 
 	// Subpalettes
@@ -118,10 +125,6 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'sorting'                 => true,
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-		'abschnitt' => array
-		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		),
 		'status' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['status'],
@@ -139,8 +142,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		),
 		'infobox' => array
 		(
-			'exclude'              => true,
-			'input_field_callback' => array('tl_fideid', 'getInfobox')
+			'exclude'                 => true,
+			'input_field_callback'    => array('tl_fideid', 'getInfobox')
 		),
 		'formulardatum' => array
 		(
@@ -166,7 +169,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['antragsteller_ungleich_person'],
 			'inputType'               => 'checkbox',
 			'filter'                  => true,
-			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
+			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr m12'),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'nachname_person' => array
@@ -351,7 +354,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'filter'                  => true,
 			'eval'                    => array
 			(
-				'tl_class'            => 'w50',
+				'tl_class'            => 'w50 m12',
 				'isBoolean'           => true
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
@@ -393,10 +396,16 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'filter'                  => true,
 			'eval'                    => array
 			(
-				'tl_class'            => 'w50',
+				'tl_class'            => 'w50 m12 clr',
 				'isBoolean'           => true
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'ausweisbox' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'],
+			'exclude'                 => true,
+			'input_field_callback'    => array('tl_fideid', 'getAusweisbox')
 		),
 		'turnier' => array
 		(
@@ -421,7 +430,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'filter'                  => true,
 			'eval'                    => array
 			(
-				'tl_class'            => 'w50',
+				'tl_class'            => 'w50 m12',
 				'isBoolean'           => true
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
@@ -442,6 +451,18 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('maxlength'=>10, 'tl_class'=>'w50'),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'nuligalight' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['nuligalight'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array
+			(
+				'tl_class'            => 'w50 m12',
+				'isBoolean'           => true
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'intern' => array
 		(
@@ -511,6 +532,43 @@ class tl_fideid extends Backend
 	}
 
 	/**
+	 * Vorschau und Links auf die angehängte Datei
+	 * @param array
+	 * @return string
+	 */
+	public function getAusweisbox(DataContainer $dc)
+	{
+
+		$ausgabe = '';
+		if($dc->activeRecord->ausweis)
+		{
+			$file = \FilesModel::findByUuid($dc->activeRecord->ausweis);
+			// Vorschau anzeigen
+			if($file->extension == 'pdf')
+			{
+				$ausgabe .= self::PDFtoJPG($file->path);
+			}
+			elseif($file->extension == 'jpg' || $file->extension == 'png' || $file->extension == 'gif')
+			{
+				$ausgabe .= '<a href="'.$file->path.'" target="_blank">';
+				$ausgabe .= '<img src="'.$file->path.'" style="max-width:800px;">';
+				$ausgabe .= '</a><br>';
+			}
+			// Link anzeigen
+			$ausgabe .= 'Download: <a href="'.$file->path.'" target="_blank">'.$file->name.'</a>';
+		}
+				
+		$string = '
+<div class="widget long clr">
+  <h3 style="margin-bottom:10px;"><label for="ctrl_ausweisbox">'.$GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'][0].'</label></h3>
+  <p><b>'.$ausgabe.'</b></p>
+  <p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'][1].'</p>
+</div>';
+
+		return $string;
+	}
+
+	/**
 	 * Datensätze auflisten
 	 * @param array
 	 * @return string
@@ -549,4 +607,51 @@ class tl_fideid extends Backend
 		else return '';
 	}
 
+	function PDFtoJPG($file)
+	{
+		$content = '';
+		//$ausgabe .= 'Seite 1:<br>';
+		//$img = new Imagick();
+		//$img->setResolution(300,300);
+		//$img->readImage($file->path.'[0]');
+		////$img->cropThumbnailImage(364, 364);
+		//$img->setImageFormat('jpg');
+		//$img->scaleImage(1200, 1200, true);
+		//$img->setImageAlphaChannel(Imagick::VIRTUALPIXELMETHOD_WHITE);
+		//$img->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+		//$thumbnail = base64_encode($img->getImage());
+		//$ausgabe .= '<img src="data:image/jpg;base64,'.$thumbnail.'"><br>';
+
+		$pdf = new \Imagick($file);
+		$anzahlDerSeiten = $pdf->getNumberImages();
+		
+		for ($i = 0; $i < $anzahlDerSeiten; $i++) {
+		
+			$image = new \Imagick();
+			
+			$image->setResolution(400,400);
+			$image->readImage($file."[".$i."]" );
+			
+			$image->setBackgroundColor('white');
+			$image->setImageAlphaChannel(imagick::ALPHACHANNEL_DEACTIVATE );
+			$image->setImageFormat('jpg');
+			$image->scaleImage(1200, 1200, true);
+			
+			
+			$thumbnail = base64_encode($image->getImage());
+			$content .= 'Seite '.($i+1).'<br>';
+			$content .= '<a href="'.$file.'" target="_blank">';
+			$content .= '<img src="data:image/jpg;base64,'.$thumbnail.'">';
+			$content .= '</a><br>';
+
+			// Write image to path
+			//$image->writeImage($imgPath."/".$filename);
+			$image->clear();
+			$image->destroy();
+			
+			#echo "<img src='".$imgPath."/".$filename."' />";
+		
+		}
+		return $content;
+	}
 }

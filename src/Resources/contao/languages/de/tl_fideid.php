@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['email'] = array('E-Mail', 'Geben Sie hier die 
 
 $GLOBALS['TL_LANG']['tl_fideid']['fide_id_legend'] = 'FIDE-Identifikationsnummer';
 $GLOBALS['TL_LANG']['tl_fideid']['fide_id'] = array('FIDE-Identifikationsnummer', 'Zugeteilte FIDE-Identifikationsnummer');
+$GLOBALS['TL_LANG']['tl_fideid']['nuligalight'] = array('MIVIS/nuLigaLight', 'Die FIDE-Identifikationsnummer wurde in MIVIS/nuLigaLight eingetragen.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['datenschutz_legend'] = 'Datenschutz';
 $GLOBALS['TL_LANG']['tl_fideid']['datenschutz'] = array('Datenweitergabe an die FIDE', 'Der Antragsteller willigt ein, daß der Deutsche Schachbund die Daten an die FIDE weitergibt.');
@@ -39,6 +40,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['verein'] = array('Verein', 'Verein des Antrags
 
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis_legend'] = 'Personalausweis/Geburtsurkunde';
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei', 'Datei auswählen');
+$GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'] = array('Vorschau', 'Vorschau und Link zur Datei');
 $GLOBALS['TL_LANG']['tl_fideid']['elterneinverstaendnis'] = array('Zustimmung Erziehungsberechtigte(r)', 'Zustimmung des/der Erziehungsberechtigten liegt vor.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['turnier_legend'] = 'Turnier';
@@ -57,7 +59,14 @@ $GLOBALS['TL_LANG']['tl_fideid']['publish_legend'] = 'Bearbeitungsstatus';
 $GLOBALS['TL_LANG']['tl_fideid']['published'] = array('Fertig', 'Der Antrag wurde fertig bearbeitet.');
 
 /**
- * Buttons für Operationen
+ * Buttons für globale Operationen
+ */
+
+$GLOBALS['TL_LANG']['tl_fideid']['templates'] = array('E-Mail-Templates', 'E-Mail-Templates verwalten');
+
+
+/**
+ * Buttons für lokale Operationen
  */
 
 $GLOBALS['TL_LANG']['tl_fideid']['new'] = array('Neuer Antrag', 'Neuen Antrag anlegen');

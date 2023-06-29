@@ -1,5 +1,12 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.3.0 (2023-06-29)
+
+* Add: tl_fideid.nuligalight -> Checkbox für Bestätigung der Eintragung der FIDE-ID in der Mitgliederverwaltung
+* Delete: tl_fideid.abschnitt -> Hilfsfeld hat negative Auswirkungen im Formular
+* Add: tl_fideid.ausweisbox -> Vorschau/Link der angehängten Datei (Unterstützung für: pdf, jpg, png, gif)
+* Add: Tabelle tl_fideid_templates -> Verwaltung der E-Mail-Templates
+
 ## Version 0.2.6 (2023-06-26)
 
 * Fix: Änderungen aus Version 0.2.4 rückgängig gemacht, da der storeFormData-Hook erst nach dem E-Mail-Versand aktiv wird.

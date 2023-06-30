@@ -64,7 +64,6 @@ $GLOBALS['TL_LANG']['tl_fideid']['published'] = array('Fertig', 'Der Antrag wurd
 
 $GLOBALS['TL_LANG']['tl_fideid']['templates'] = array('E-Mail-Templates', 'E-Mail-Templates verwalten');
 
-
 /**
  * Buttons für lokale Operationen
  */
@@ -75,6 +74,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['copy'] = array('Antrag kopieren', 'Antrag %s k
 $GLOBALS['TL_LANG']['tl_fideid']['delete'] = array('Antrag löschen', 'Antrag %s löschen');
 $GLOBALS['TL_LANG']['tl_fideid']['toggle'] = array('Antrag aktivieren/deaktivieren', 'Antrag %s aktivieren/deaktivieren');
 $GLOBALS['TL_LANG']['tl_fideid']['show'] = array('Antragsdetails anzeigen', 'Details des Antrags %s anzeigen');
+
 /**
  * Select-Felder
  */
@@ -110,4 +110,10 @@ $GLOBALS['TL_LANG']['tl_fideid']['geschlecht_optionen'] = array
 	'W'    => 'Weiblich',
 	'D'    => 'Divers',
 );
+
+/**
+ * Sonstige Übersetzungen
+ */
+
+$GLOBALS['TL_LANG']['tl_fideid']['imagickNotInstalled'] = 'PDF-Vorschau nicht möglich. Imagick nicht installiert.';
 

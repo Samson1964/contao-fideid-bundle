@@ -74,6 +74,13 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif',
 			),
+			'emailbox' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['emailbox'],
+				'href'                => 'table=tl_fideid_mails',
+				'icon'                => 'bundles/contaofideid/images/email.png',
+				'button_callback'     => array('tl_fideid', 'toggleEmail')
+			),
 			'copy' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['copy'],
@@ -610,17 +617,12 @@ class tl_fideid extends Backend
 	function PDFtoJPG($file)
 	{
 		$content = '';
-		//$ausgabe .= 'Seite 1:<br>';
-		//$img = new Imagick();
-		//$img->setResolution(300,300);
-		//$img->readImage($file->path.'[0]');
-		////$img->cropThumbnailImage(364, 364);
-		//$img->setImageFormat('jpg');
-		//$img->scaleImage(1200, 1200, true);
-		//$img->setImageAlphaChannel(Imagick::VIRTUALPIXELMETHOD_WHITE);
-		//$img->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
-		//$thumbnail = base64_encode($img->getImage());
-		//$ausgabe .= '<img src="data:image/jpg;base64,'.$thumbnail.'"><br>';
+
+		if (!extension_loaded('imagick'))
+		{
+			$content = $GLOBALS['TL_LANG']['tl_fideid']['imagickNotInstalled'];
+			return $content;
+		}
 
 		$pdf = new \Imagick($file);
 		$anzahlDerSeiten = $pdf->getNumberImages();
@@ -644,14 +646,36 @@ class tl_fideid extends Backend
 			$content .= '<img src="data:image/jpg;base64,'.$thumbnail.'">';
 			$content .= '</a><br>';
 
-			// Write image to path
-			//$image->writeImage($imgPath."/".$filename);
 			$image->clear();
 			$image->destroy();
 			
-			#echo "<img src='".$imgPath."/".$filename."' />";
-		
 		}
 		return $content;
 	}
+
+	public function toggleEmail($row, $href, $label, $title, $icon, $attributes)
+	{
+		$this->import('BackendUser', 'User');
+
+		$href .= '&amp;id='.$row['id'];
+
+		$verband_email = '';
+		$person_email = '';
+
+		if($person_email && $verband_email)
+		{
+			$icon = 'bundles/contaolizenzverwaltung/images/email.png';
+		}
+		elseif($person_email || $verband_email)
+		{
+			$icon = 'bundles/contaolizenzverwaltung/images/email_gelb.png';
+		}
+		else
+		{
+			$icon = 'bundles/contaolizenzverwaltung/images/email_grau.png';
+		}
+
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
+	}
+
 }

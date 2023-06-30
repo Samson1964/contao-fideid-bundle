@@ -1,5 +1,13 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.4.0 (2023-06-30)
+
+* Fix: Wenn Imagick nicht installiert ist, kommt eine Fehlermeldung -> Abfrage eingebaut, ob Imagick vorhanden ist
+* Change: Icons Tabelle tl_fideid und tl_fideid_templates ausgetauscht
+* Add: Tabelle tl_fideid_mails -> Verwaltung der E-Mails
+* Add: Tabelle tl_settings -> Einstellungen
+* Add: E-Mail-Funktionen ausgebaut
+
 ## Version 0.3.0 (2023-06-29)
 
 * Add: tl_fideid.nuligalight -> Checkbox für Bestätigung der Eintragung der FIDE-ID in der Mitgliederverwaltung

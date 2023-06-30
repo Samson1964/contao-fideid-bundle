@@ -16,8 +16,9 @@
  */
 $GLOBALS['BE_MOD']['content']['fideid'] = array
 (
-	'tables'         => array('tl_fideid', 'tl_fideid_templates'),
-	'icon'           => 'bundles/contaofideid/images/icon.png',
+	'tables'            => array('tl_fideid', 'tl_fideid_templates', 'tl_fideid_mails'),
+	'icon'              => 'bundles/contaofideid/images/icon.png',
+	'send'              => array('Schachbulle\ContaoFideidBundle\Classes\Mailer', 'send'), 
 );
 
 /**

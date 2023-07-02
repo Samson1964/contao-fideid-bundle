@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.4.1 (2023-07-02)
+
+* Add: E-Mail-Funktion ausgebaut und Fehler beseitigt
+* Add: Speicherung der Absender/Empfänger beim Versand
+
 ## Version 0.4.0 (2023-06-30)
 
 * Fix: Wenn Imagick nicht installiert ist, kommt eine Fehlermeldung -> Abfrage eingebaut, ob Imagick vorhanden ist

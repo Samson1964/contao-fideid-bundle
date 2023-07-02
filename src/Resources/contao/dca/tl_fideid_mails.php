@@ -126,6 +126,7 @@ $GLOBALS['TL_DCA']['tl_fideid_mails'] = array
 			'options_callback'        => array('tl_fideid_mails', 'getTemplates'),
 			'eval'                    => array
 			(
+				'includeBlankOption'  => true,
 				'tl_class'            => 'w50',
 				'submitOnChange'      => true
 			),
@@ -189,6 +190,42 @@ $GLOBALS['TL_DCA']['tl_fideid_mails'] = array
 		'sent_text' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_mails']['sent_text'],
+			'eval'                    => array
+			(
+				'doNotCopy'           => true,
+			),
+			'sql'                     => "mediumtext NULL"
+		),
+		'sent_from' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_mails']['sent_from'],
+			'eval'                    => array
+			(
+				'doNotCopy'           => true,
+			),
+			'sql'                     => "mediumtext NULL"
+		),
+		'sent_to' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_mails']['sent_to'],
+			'eval'                    => array
+			(
+				'doNotCopy'           => true,
+			),
+			'sql'                     => "mediumtext NULL"
+		),
+		'sent_cc' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_mails']['sent_cc'],
+			'eval'                    => array
+			(
+				'doNotCopy'           => true,
+			),
+			'sql'                     => "mediumtext NULL"
+		),
+		'sent_bcc' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_mails']['sent_bcc'],
 			'eval'                    => array
 			(
 				'doNotCopy'           => true,
@@ -275,8 +312,21 @@ class tl_fideid_mails extends Backend
 			$content = 'Kein Template gefunden!';
 		}
 
+		// Empfänger-Ausgabe vorbereiten
+		$to = unserialize($arrRow['sent_to']);
+		if(is_array($to)) $to = implode('', $to);
+		$cc = unserialize($arrRow['sent_cc']);
+		if(is_array($cc)) $cc = implode('', $cc);
+		$bcc = unserialize($arrRow['sent_bcc']);
+		if(is_array($bcc)) $bcc = implode('', $bcc);
+
 		return '
-<div class="cte_type ' . (($arrRow['sent_state'] && $arrRow['sent_date']) ? 'published' : 'unpublished') . '"><strong>' . $arrRow['subject'] . '</strong> - ' . (($arrRow['sent_state'] && $arrRow['sent_date']) ? 'Versendet am '.Date::parse(Config::get('datimFormat'), $arrRow['sent_date']) : 'Nicht versendet'). '</div>
+<div class="cte_type ' . (($arrRow['sent_state'] && $arrRow['sent_date']) ? 'published' : 'unpublished') . '"><strong>' . $arrRow['subject'] . '</strong> - ' . (($arrRow['sent_state'] && $arrRow['sent_date']) ? 'Versendet am '.Date::parse(Config::get('datimFormat'), $arrRow['sent_date']) : 'Nicht versendet'). '<br>
+<span style="color:black;">Von:</span> <span style="color:blue;">'.htmlentities($arrRow['sent_from']).'</span>
+<span style="color:black;">An:</span> <span style="color:blue;">'.htmlentities($to).'</span><br>
+<span style="color:black;">Cc:</span> <span style="color:blue;">'.htmlentities($cc).'</span>
+<span style="color:black;">Bcc:</span> <span style="color:blue;">'.htmlentities($bcc).'</span>
+</div>
 <div class="limit_height' . (!Config::get('doNotCollapse') ? ' h128' : '') . '">' . (!$arrRow['send_text'] ? '
 ' . \StringUtil::insertTagToSrc($content) . '<hr>' : '' ) . '
 </div>' . "\n";

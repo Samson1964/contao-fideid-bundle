@@ -35,14 +35,15 @@ class Mailer extends \Backend
 			$this->Session->set('tl_fideid_send', null);
 			$objEmail = new \Email();
 
+			$from = html_entity_decode(\Input::get('from'));
 			// Empfänger-Adressen in ein Array packen
-			$from = explode(',', html_entity_decode(\Input::get('from')));
+			//$from = explode(',', html_entity_decode(\Input::get('from')));
 			$to = explode(',', html_entity_decode(\Input::get('to')));
 			$cc = explode(',', html_entity_decode(\Input::get('cc')));
 			$bcc = explode(',', html_entity_decode(\Input::get('bcc')));
 
 			// Führende und abschließende Leerzeichen entfernen, und leere Elemente entfernen
-			$from = array_filter(array_map('trim', $from));
+			//$from = array_filter(array_map('trim', $from));
 			$to = array_filter(array_map('trim', $to));
 			$cc = array_filter(array_map('trim', $cc));
 			$bcc = array_filter(array_map('trim', $bcc));
@@ -50,7 +51,8 @@ class Mailer extends \Backend
 			// Absender "Name <email>" in ein Array $arrFrom aufteilen
 			preg_match('~(?:([^<]*?)\s*)?<(.*)>~', $from, $arrFrom);
 			
-			print_r($arrFrom);
+			//print_r($arrFrom);
+			
 
 			// Adressen validieren, Exception bei ungültiger Adresse
 			if($to && is_array($to))
@@ -84,22 +86,28 @@ class Mailer extends \Backend
 				}
 			}
 
+			log_message('From:','fideid_email.log');
+			log_message(print_r($arrFrom,true),'fideid_email.log');
+
 			$objEmail->from = $arrFrom[2];
 			$objEmail->fromName = $arrFrom[1];
 			$objEmail->subject = $mail->subject;
-			$objEmail->logFile = 'fideid_email.log';
 			$objEmail->html = $preview_css;
 			if($cc[0]) $objEmail->sendCc($cc);
 			if($bcc[0]) $objEmail->sendBcc($bcc);
 			$status = $objEmail->sendTo($to);
 			if($status)
 			{
-				// Versanddatum in Datenbank eintragen
+				// Versanddatum, Text und Absender/Empfänger in Datenbank eintragen
 				$set = array
 				(
 					'sent_date'  => time(),
 					'sent_state' => 1,
-					'sent_text'  => $preview_body
+					'sent_text'  => $preview_body,
+					'sent_from'  => $arrFrom[1].' <'.$arrFrom[2].'>',
+					'sent_to'    => $to,
+					'sent_cc'    => $cc,
+					'sent_bcc'   => $bcc,
 				);
 				$spieler = \Database::getInstance()->prepare("UPDATE tl_fideid_mails %s WHERE id = ?")
 				                                   ->set($set)
@@ -121,29 +129,19 @@ class Mailer extends \Backend
 		}
 
 		// E-Mail-Empfänger festlegen
-		// 1. Lizenzinhaber
-		$spieler->email ? $email_an = htmlentities($spieler->vorname.' '.$spieler->name.' <'.$spieler->email.'>') : $email_an = '';
-		// 2. Referenten, die informiert werden wollen
-		if($mail->copyVerband && $referenten->numRows > 0)
+		if($spieler->antragsteller_ungleich_person)
 		{
-			$email_cc = '';
-			while($referenten->next())
-			{
-				$email_cc .= htmlentities($referenten->vorname.' '.$referenten->nachname.' <'.$referenten->email.'>, ');
-			}
-			if($email_cc) $email_cc = substr($email_cc, 0, -2); // Letztes ", " entfernen
+			// Antragsteller und Auftraggeber sind unterschiedlich
+			$email_to = htmlentities($spieler->vorname_person.' '.$spieler->nachname_person.' <'.$spieler->email_person.'>');
+			$email_cc = htmlentities($spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
+			$email_bcc = '';
 		}
-		// 3. Kopie an Verantwortliche in DSB-GS und andere DSB-Referenten
-		if($mail->copyDSB)
+		else
 		{
-			$email_bcc = htmlentities(LIZENZVERWALTUNG_ABSENDER);
-			if($dsbreferenten->numRows > 0)
-			{
-				while($dsbreferenten->next())
-				{
-					$email_bcc .= htmlentities(', '.$dsbreferenten->vorname.' '.$dsbreferenten->nachname.' <'.$dsbreferenten->email.'>');
-				}
-			}
+			// Antragsteller und Auftraggeber sind gleich
+			$email_to = htmlentities($spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
+			$email_cc = '';
+			$email_bcc = '';
 		}
 
 		$strToken = md5(uniqid(mt_rand(), true));
@@ -183,7 +181,7 @@ class Mailer extends \Backend
 </div>
 <div class="long widget">
   <h3><label for="ctrl_an">To (Empfänger)<span class="mandatory">*</span></label></h3>
-  <input type="text" name="to" id="ctrl_an" value="'.$email_an.'" class="tl_text" onfocus="Backend.getScrollOffset()">
+  <input type="text" name="to" id="ctrl_an" value="'.$email_to.'" class="tl_text" onfocus="Backend.getScrollOffset()">
   <p class="tl_help tl_tip">Pflichtfeld: Empfänger dieser E-Mail. Weitere Empfänger mit Komma trennen.</p>
 </div>
 <div class="long widget">

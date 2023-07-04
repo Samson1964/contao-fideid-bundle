@@ -655,24 +655,41 @@ class tl_fideid extends Backend
 
 	public function toggleEmail($row, $href, $label, $title, $icon, $attributes)
 	{
-		$this->import('BackendUser', 'User');
+		// E-Mail-Datensatz einlesen
+		$emails = \Database::getInstance()->prepare("SELECT * FROM tl_fideid_mails WHERE pid=?")
+		                                  ->execute($row['id']);
 
+		// E-Mails zählen
+		$gesamt = 0;
+		$nichtversendet = 0;
+		if($emails->numRows)
+		{
+			while($emails->next())
+			{
+				$gesamt += 1;
+				$nichtversendet += $emails->sent_state ? 0 : 1;
+			}
+		}
+		
 		$href .= '&amp;id='.$row['id'];
 
-		$verband_email = '';
-		$person_email = '';
-
-		if($person_email && $verband_email)
+		if($gesamt > 0 && $gesamt != $nichtversendet)
 		{
-			$icon = 'bundles/contaolizenzverwaltung/images/email.png';
+			// Nicht alle versendet
+			$icon = 'bundles/contaofideidverwaltung/images/email_rot.png';
+			$title .= ' ('.$nichtversendet.' unversendete E-Mails vorhanden)';
 		}
-		elseif($person_email || $verband_email)
+		elseif($gesamt > 0 && $gesamt == $nichtversendet)
 		{
-			$icon = 'bundles/contaolizenzverwaltung/images/email_gelb.png';
+			// Alle versendet
+			$icon = 'bundles/contaofideidverwaltung/images/email_gelb.png';
+			$title .= ' ('.$gesamt.' E-Mails vorhanden)';
 		}
 		else
 		{
-			$icon = 'bundles/contaolizenzverwaltung/images/email_grau.png';
+			// Keine E-Mails
+			$icon = 'bundles/contaofideidverwaltung/images/email_grau.png';
+			$title .= ' (Keine E-Mails vorhanden)';
 		}
 
 		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';

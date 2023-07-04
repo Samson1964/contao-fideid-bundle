@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 0.4.2 (2023-07-04)
+
+* Fix: Darstellung E-Mail-Button tl_fideid verbessert
+
 ## Version 0.4.1 (2023-07-02)
 
 * Add: E-Mail-Funktion ausgebaut und Fehler beseitigt

@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.0.0 (2023-07-04)
+
+* Change: tl_fideid -> Farbe des Spielers nur rot, grün und blau
+* Fix: Fehler bei Icon-Verlinkung E-Mail
+
 ## Version 0.4.2 (2023-07-04)
 
 * Fix: Darstellung E-Mail-Button tl_fideid verbessert

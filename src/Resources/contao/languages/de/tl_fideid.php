@@ -70,6 +70,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['templates'] = array('E-Mail-Templates', 'E-Mai
 
 $GLOBALS['TL_LANG']['tl_fideid']['new'] = array('Neuer Antrag', 'Neuen Antrag anlegen');
 $GLOBALS['TL_LANG']['tl_fideid']['edit'] = array('Antrag bearbeiten', 'Antrag %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_fideid']['emailbox'] = array('Postfach', 'E-Mail-Postfach verwalten');
 $GLOBALS['TL_LANG']['tl_fideid']['copy'] = array('Antrag kopieren', 'Antrag %s kopieren');
 $GLOBALS['TL_LANG']['tl_fideid']['delete'] = array('Antrag löschen', 'Antrag %s löschen');
 $GLOBALS['TL_LANG']['tl_fideid']['toggle'] = array('Antrag aktivieren/deaktivieren', 'Antrag %s aktivieren/deaktivieren');

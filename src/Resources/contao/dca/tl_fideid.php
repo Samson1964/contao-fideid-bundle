@@ -585,9 +585,9 @@ class tl_fideid extends Backend
 		// Farben festlegen
 		$farbe = array(
 			'0' => '#FF0000',
-			'1' => '#919100',
-			'2' => '#009595',
-			'3' => '#0000A0',
+			'1' => '#0000FF',
+			'2' => '#0000FF',
+			'3' => '#0000FF',
 			'4' => '#008000',
 		);
 		// Farbe für Zeile setzen
@@ -676,19 +676,19 @@ class tl_fideid extends Backend
 		if($gesamt > 0 && $gesamt != $nichtversendet)
 		{
 			// Nicht alle versendet
-			$icon = 'bundles/contaofideidverwaltung/images/email_rot.png';
+			$icon = 'bundles/contaofideid/images/email_rot.png';
 			$title .= ' ('.$nichtversendet.' unversendete E-Mails vorhanden)';
 		}
 		elseif($gesamt > 0 && $gesamt == $nichtversendet)
 		{
 			// Alle versendet
-			$icon = 'bundles/contaofideidverwaltung/images/email_gelb.png';
+			$icon = 'bundles/contaofideid/images/email_gelb.png';
 			$title .= ' ('.$gesamt.' E-Mails vorhanden)';
 		}
 		else
 		{
 			// Keine E-Mails
-			$icon = 'bundles/contaofideidverwaltung/images/email_grau.png';
+			$icon = 'bundles/contaofideid/images/email_grau.png';
 			$title .= ' (Keine E-Mails vorhanden)';
 		}
 

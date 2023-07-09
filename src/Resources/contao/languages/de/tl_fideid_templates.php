@@ -25,7 +25,13 @@ $GLOBALS['TL_LANG']['tl_fideid_templates']['show'] = array("Details zum Template
 $GLOBALS['TL_LANG']['tl_fideid_templates']['name_legend'] = 'Name und Inhalt';
 $GLOBALS['TL_LANG']['tl_fideid_templates']['name']= array('Name', 'Name des Templates');
 $GLOBALS['TL_LANG']['tl_fideid_templates']['description']= array('Beschreibung', 'Kurze Beschreibung des Templates');
+$GLOBALS['TL_LANG']['tl_fideid_templates']['subject']= array('Betreff', 'Betreffzeile der E-Mail. Platzhalter sind möglich, siehe Hilfelink.');
 $GLOBALS['TL_LANG']['tl_fideid_templates']['template']= array('HTML-Inhalt', 'HTML-Inhalt des Templates. Verwenden Sie den Hilfe-Link für weitere Informationen.');
+
+$GLOBALS['TL_LANG']['tl_fideid_templates']['speed_legend'] = 'Schneller E-Mail-Versand';
+$GLOBALS['TL_LANG']['tl_fideid_templates']['speedbutton']= array('Aktivieren', 'Einen Button für schnellen E-Mail-Versand aktivieren');
+$GLOBALS['TL_LANG']['tl_fideid_templates']['buttonname']= array('Text', 'Text auf dem Button');
+$GLOBALS['TL_LANG']['tl_fideid_templates']['buttontip']= array('Hilfetext', 'Hilfetext unter dem Button');
 
 $GLOBALS['TL_LANG']['tl_fideid_templates']['publish_legend'] = 'Aktivierung';
 $GLOBALS['TL_LANG']['tl_fideid_templates']['published']= array('Aktiv', 'Template aktivieren');

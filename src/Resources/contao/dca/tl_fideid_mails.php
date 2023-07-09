@@ -144,10 +144,17 @@ $GLOBALS['TL_DCA']['tl_fideid_mails'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
-			'default'                 => 'Übersendung der FIDE-Identifikationsnummer',
 			'flag'                    => 1,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'decodeEntities'=>true, 'maxlength'=>128, 'tl_class'=>'long clr'),
+			'eval'                    => array
+			(
+				'mandatory'           => false, 
+				'decodeEntities'      => true, 
+				'maxlength'           => 255, 
+				'helpwizard'          => true, 
+				'tl_class'            => 'long clr'
+			),
+			'explanation'             => 'fideid_templates',
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'content' => array
@@ -162,7 +169,7 @@ $GLOBALS['TL_DCA']['tl_fideid_mails'] = array
 				'helpwizard'          => true,
 				'tl_class'            => 'long clr',
 			),
-			'explanation'             => 'insertTags',
+			'explanation'             => 'fideid_templates',
 			'sql'                     => "mediumtext NULL"
 		),
 		'sent_state' => array
@@ -272,6 +279,9 @@ class tl_fideid_mails extends Backend
 
 		if($tpl->numRows)
 		{
+			// Betreffzeile festlegen
+			$arrRow['subject'] = $arrRow['subject'] ? $arrRow['subject'] : $tpl->subject;
+			// Text festlegen
 			preg_match('/<body>(.*)<\/body>/s', $tpl->template, $matches); // Body extrahieren
 			$content = \StringUtil::restoreBasicEntities($matches[1]); // [nbsp] und Co. ersetzen
 			// Felder den Tokens zuweisen
@@ -304,6 +314,7 @@ class tl_fideid_mails extends Backend
 				'content'                       => $arrRow['content'],
 				'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
 			);
+			$arrRow['subject'] = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($arrRow['subject'], $arrTokens);
 			$content = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($content, $arrTokens);
 		}
 		else
@@ -347,6 +358,9 @@ class tl_fideid_mails extends Backend
 
 			if($tpl->numRows)
 			{
+				// Betreffzeile festlegen
+				$subject = $dc->activeRecord->subject ? $dc->activeRecord->subject : $tpl->subject;
+				// Text festlegen
 				preg_match('/<body>(.*)<\/body>/s', $tpl->template, $matches); // Body extrahieren
 				$content = \StringUtil::restoreBasicEntities($matches[1]); // [nbsp] und Co. ersetzen  
 				// Felder den Tokens zuweisen
@@ -379,6 +393,8 @@ class tl_fideid_mails extends Backend
 					'content'                       => $dc->activeRecord->content,
 					'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
 				);
+				$subject = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($subject, $arrTokens);
+				$subject = '<div class="tl_preview"><b>'.$subject.'</b></div>';
 				$content = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($content, $arrTokens);
 				$content = '<div class="tl_preview"><p>'.$content.'</p></div>';
 			}
@@ -393,11 +409,17 @@ class tl_fideid_mails extends Backend
 			$content = '<p><b>Keine Vorlage ausgewählt</b></p>';
 		}
 
+		$subject .= 'Betreff';
+		
 		$string = '
 <div class="long clr widget">
 	<h3><label>'.$GLOBALS['TL_LANG']['tl_fideid_mails']['preview'][0].'</label></h3>
+	'.$subject.'
+	<p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_fideid_mails']['preview_subject'][1].'</p>
+</div>
+<div class="long clr widget">
 	'.$content.'
-	<p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_fideid_mails']['preview'][1].'</p>
+	<p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_fideid_mails']['preview_text'][1].'</p>
 </div>';
 
 		return $string;

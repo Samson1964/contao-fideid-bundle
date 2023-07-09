@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_fideid_templates'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('name', 'description'),
+			'fields'                  => array('name', 'description', 'subject'),
 			'format'                  => '%s %s',
 			'showColumns'             => true,
 		),
@@ -112,7 +112,14 @@ $GLOBALS['TL_DCA']['tl_fideid_templates'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{name_legend},name,description,template;{publish_legend},published'
+		'__selector__'                => array('speedbutton'),
+		'default'                     => '{name_legend},name,description,subject,template;{speed_legend},speedbutton;{publish_legend},published'
+	),
+
+	// Subpalettes
+	'subpalettes' => array
+	(
+		'speedbutton'                 => 'buttonname,buttontip'
 	),
 
 	// Fields
@@ -154,6 +161,22 @@ $GLOBALS['TL_DCA']['tl_fideid_templates'] = array
 			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
+		'subject' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_templates']['subject'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'mandatory'           => false,
+				'maxlength'           => 255, 
+				'helpwizard'          => true, 
+				'tl_class'            => 'long'
+			),
+			'explanation'             => 'fideid_templates',
+			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
 		'template' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_templates']['template'],
@@ -172,6 +195,44 @@ $GLOBALS['TL_DCA']['tl_fideid_templates'] = array
 				'tl_class'            => 'long'
 			),
 			'explanation'             => 'fideid_templates',
+			'sql'                     => "text NULL"
+		),
+		'speedbutton' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_templates']['speedbutton'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array
+			(
+				'submitOnChange'      => true, 
+				'tl_class'            => 'clr'
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'buttonname' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_templates']['buttonname'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'mandatory'           => false, 
+				'maxlength'           => 32, 
+				'tl_class'            => 'w50'
+			),
+			'sql'                     => "varchar(32) NOT NULL default ''"
+		),
+		'buttontip' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid_templates']['buttontip'],
+			'exclude'                 => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array
+			(
+				'mandatory'           => false, 
+				'tl_class'            => 'w50'
+			),
 			'sql'                     => "text NULL"
 		),
 		'published' => array

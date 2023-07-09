@@ -24,9 +24,13 @@ class Mailer extends \Backend
 		$spieler = \Database::getInstance()->prepare("SELECT * FROM tl_fideid WHERE id = ?")
 		                                   ->execute($mail->pid);
 
+		// Betreffzeile festlegen
+		$subject = $mail->subject ? $mail->subject : $tpl->subject;
+
 		$preview = $this->getPreview($dc->id, $mail->pid, $mail->template); // HTML-Vorschau erstellen
 		$preview_css = $this->getPreview($dc->id, $mail->pid, $mail->template, true, $css); // HTML/CSS-Version erstellen
 		$preview_body = $this->getPreview($dc->id, $mail->pid, $mail->template, false); // Body-Vorschau erstellen
+		$subject = $this->getSubject($dc->id, $mail->pid, $mail->template, $subject); // Tokens im Betreff ersetzen
 
 		// E-Mail versenden
 		if(\Input::get('token') != '' && \Input::get('token') == $this->Session->get('tl_fideid_send'))
@@ -91,7 +95,7 @@ class Mailer extends \Backend
 
 			$objEmail->from = $arrFrom[2];
 			$objEmail->fromName = $arrFrom[1];
-			$objEmail->subject = $mail->subject;
+			$objEmail->subject = $subject;
 			$objEmail->html = $preview_css;
 			if($cc[0]) $objEmail->sendCc($cc);
 			if($bcc[0]) $objEmail->sendBcc($bcc);
@@ -163,7 +167,7 @@ class Mailer extends \Backend
 <table class="prev_header">
   <tr class="row_0">
     <td class="col_0"><b>Betreff:</b></td>
-    <td class="col_1">' . $mail->subject . '</td>
+    <td class="col_1">' . $subject . '</td>
   </tr>
   <tr class="row_1">
     <td class="col_0"><b>E-Mail-Template:</b></td>
@@ -266,6 +270,55 @@ class Mailer extends \Backend
 			preg_match('/<body>(.*)<\/body>/s', $content, $matches); // Body extrahieren
 			return $matches[1];
 		}
+
+	}
+
+	public function getSubject($mail_id, $spieler_id, $template, $subject)
+	{
+		// Template-Datensatz einlesen
+		$tpl = \Database::getInstance()->prepare("SELECT * FROM tl_fideid_templates WHERE id = ?")
+		                               ->execute($template);
+
+		// Mail-Datensatz einlesen
+		$mail = \Database::getInstance()->prepare("SELECT * FROM tl_fideid_mails WHERE id = ?")
+		                                ->execute($mail_id);
+
+		// Spieler-Datensatz einlesen
+		$spieler = \Database::getInstance()->prepare("SELECT * FROM tl_fideid WHERE id = ?")
+		                                   ->execute($spieler_id);
+
+		$arrTokens = array
+		(
+			'status'                        => $spieler->status,
+			'formulardatum'                 => date('d.m.Y H:i', $spieler->formulardatum),
+			'antragsteller_ungleich_person' => $spieler->antragsteller_ungleich_person,
+			'nachname_person'               => $spieler->nachname_person,
+			'vorname_person'                => $spieler->vorname_person,
+			'email_person'                  => $spieler->email_person,
+			'art'                           => $spieler->art,
+			'nachname'                      => $spieler->nachname,
+			'vorname'                       => $spieler->vorname,
+			'titel'                         => $spieler->titel,
+			'geburtsdatum'                  => date('d.m.Y', $spieler->geburtsdatum),
+			'geschlecht'                    => $spieler->geschlecht,
+			'email'                         => $spieler->email,
+			'fide_id'                       => $spieler->fide_id,
+			'nuligalight'                   => $spieler->nuligalight,
+			'datenschutz'                   => $spieler->datenschutz,
+			'verein'                        => $spieler->verein,
+			'ausweis'                       => $spieler->ausweis,
+			'elterneinverstaendnis'         => $spieler->elterneinverstaendnis,
+			'turnier'                       => $spieler->turnier,
+			'germany'                       => $spieler->germany,
+			'bemerkungen'                   => $spieler->bemerkungen,
+			'intern'                        => $spieler->intern,
+			'subject'                       => $mail->subject,
+			'content'                       => $mail->content,
+			'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+		);
+
+		$subject = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($subject, $arrTokens);
+		return $subject;
 
 	}
 

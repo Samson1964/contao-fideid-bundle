@@ -109,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('antragsteller_ungleich_person'),
-		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,ausweisbox,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern'
+		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,ausweisbox,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
 	),
 
 	// Subpalettes
@@ -480,6 +480,16 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'eval'                    => array('rte'=>'tinyMCE'),
 			'sql'                     => "text NULL"
 		),
+		'speedmail' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['speedmail'],
+			'exclude'                 => true,
+			'input_field_callback'    => array('tl_fideid', 'getMailbuttons'),
+			'eval'                    => array
+			(
+				'tl_class'            => 'long'
+			)
+		),
 	)
 );
 
@@ -661,38 +671,70 @@ class tl_fideid extends Backend
 
 		// E-Mails zählen
 		$gesamt = 0;
-		$nichtversendet = 0;
+		$versendet = 0;
 		if($emails->numRows)
 		{
 			while($emails->next())
 			{
 				$gesamt += 1;
-				$nichtversendet += $emails->sent_state ? 0 : 1;
+				$versendet += $emails->sent_state ? 1 : 0;
 			}
 		}
 		
 		$href .= '&amp;id='.$row['id'];
 
-		if($gesamt > 0 && $gesamt != $nichtversendet)
+		if($gesamt > 0 && $gesamt != $versendet)
 		{
 			// Nicht alle versendet
 			$icon = 'bundles/contaofideid/images/email_rot.png';
-			$title .= ' ('.$nichtversendet.' unversendete E-Mails vorhanden)';
+			$title .= sprintf($GLOBALS['TL_LANG']['tl_fideid']['emailbox_offen'], ($gesamt - $versendet), $versendet);
 		}
-		elseif($gesamt > 0 && $gesamt == $nichtversendet)
+		elseif($gesamt > 0 && $gesamt == $versendet)
 		{
 			// Alle versendet
 			$icon = 'bundles/contaofideid/images/email_gelb.png';
-			$title .= ' ('.$gesamt.' E-Mails vorhanden)';
+			$title .= sprintf($GLOBALS['TL_LANG']['tl_fideid']['emailbox_versendet'], $gesamt);
 		}
 		else
 		{
 			// Keine E-Mails
 			$icon = 'bundles/contaofideid/images/email_grau.png';
-			$title .= ' (Keine E-Mails vorhanden)';
+			$title .= $GLOBALS['TL_LANG']['tl_fideid']['emailbox_leer'];
 		}
 
 		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($icon, $label).'</a> ';
 	}
+
+	/**
+	 * Buttons zur schnellen E-Mail-Übermittlung anzeigen
+	 * @param DataContainer $dc
+	 *
+	 * @return string HTML-Code
+	 */
+	public function getMailbuttons(DataContainer $dc)
+	{
+		$css = "display:inline-block; background: linear-gradient(to top, #ccc, #eee); border: 1px solid #aaa; border-radius: 3px; color: #555; cursor: pointer; text-shadow: 1px 1px 0 #eee; padding: 4px; margin-bottom:3px;";
+		
+		// Link generieren
+		$link = str_replace('&amp;act=edit', '', \Controller::addToUrl('key=getMailbuttons&rt='.REQUEST_TOKEN)); // key hinzufügen | edit löschen
+
+		// Templates einlesen
+		$tpl = \Database::getInstance()->prepare("SELECT * FROM tl_fideid_templates WHERE published=? AND speedbutton=?")
+		                               ->execute(1, 1);
+
+		$content = '<div class="long widget">';
+		if($tpl->numRows)
+		{
+			while($tpl->next())
+			{
+				$content .= '<div class="widget" style="border:0; margin-bottom:20px;"><a href="'.$link.'&template='.$tpl->id.'&antrag='.$dc->activeRecord->id.'" style="'.$css.'" onclick="if(!confirm(\'Soll die E-Mail wirklich versendet werden?\'))return false;Backend.getScrollOffset()">'.$tpl->buttonname.'</a>';
+				$content .= '<p class="tl_help tl_tip" style="font-size:.75rem;" title="">'.$tpl->buttontip.'</p></div>';
+			}
+		}
+		$content .= '</div>';
+
+		return $content;
+	}
+
 
 }

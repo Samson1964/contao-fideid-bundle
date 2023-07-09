@@ -1,5 +1,16 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.0 (2023-07-09)
+
+* Fix: Falsches E-Mail-Icon in tl_fideid -> zeigt falschen Status an
+* Change: Übersetzungen dieser E-Mail-Info ausgelagert nach languages
+* Add: tl_fideid_templates.subject -> Betreffzeile in Templates festlegen
+* Add: In der E-Mail wird jetzt die Betreffzeile aus dem Template verwendet, die von der Betreffzeile in der E-Mail überschrieben werden kann.
+* Add: Hilfe in tl_fideid_templates.subject, tl_fideid_templates.template, tl_fideid_mails.subject und tl_fideid_mails.content
+* Add: tl_fideid_templates.speedbutton und tl_fideid_templates.buttonname für Aktivierung eines Buttons für schnellen E-Mail-Versand
+* Add: tl_fideid.speedmail -> Formularbereich mit Buttons für den schnellen E-Mail-Versand
+* Add: Klasse Speedmailer.php für den schnellen E-Mail-Versand
+
 ## Version 1.0.0 (2023-07-04)
 
 * Change: tl_fideid -> Farbe des Spielers nur rot, grün und blau

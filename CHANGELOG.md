@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.1 (2023-07-10)
+
+* Add: tl_fideid.ueber18 -> wird im Formular abgefragt, im Backend wird die Checkbox versteckt
+* Add: tl_fideid.turnierlink -> Zeigt einen Link zur FIDE-Seite mit den registrierten Turnieren an.
+
 ## Version 1.1.0 (2023-07-09)
 
 * Fix: Falsches E-Mail-Icon in tl_fideid -> zeigt falschen Status an

@@ -109,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('antragsteller_ungleich_person'),
-		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,ausweisbox,elterneinverstaendnis;{turnier_legend:hide},turnier;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
+		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,ausweisbox,elterneinverstaendnis;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
 	),
 
 	// Subpalettes
@@ -131,6 +131,15 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'flag'                    => 5,
 			'sorting'                 => true,
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'ueber18' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['ueber18'],
+			'eval'                    => array
+			(
+				'isBoolean'           => true
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'status' => array
 		(
@@ -430,6 +439,12 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
+		'turnierlink' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['turnierlink'],
+			'exclude'                 => true,
+			'input_field_callback'    => array('tl_fideid', 'getTurnierlink')
+		),
 		'germany' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['germany'],
@@ -543,6 +558,17 @@ class tl_fideid extends Backend
 		$string = '
 <div class="widget long">
   <p><b>'.$ausgabe.'</b></p>
+</div>';
+
+		return $string;
+	}
+
+	public function getTurnierlink(DataContainer $dc)
+	{
+		
+		$string = '<div class="w50 widget">
+  <h3></h3>
+  <p><a href="https://ratings.fide.com/rated_tournaments.phtml?country=GER" target="_blank">Registrierte Turniere bei der FIDE</a></p>
 </div>';
 
 		return $string;
@@ -722,12 +748,13 @@ class tl_fideid extends Backend
 		$tpl = \Database::getInstance()->prepare("SELECT * FROM tl_fideid_templates WHERE published=? AND speedbutton=?")
 		                               ->execute(1, 1);
 
-		$content = '<div class="long widget">';
+		$content = '<div class="widget">';
+		$content .= '<h3><label for="ctrl_getmailbuttons">'.$GLOBALS['TL_LANG']['tl_fideid']['speedmail'][0].'</label></h3>';
 		if($tpl->numRows)
 		{
 			while($tpl->next())
 			{
-				$content .= '<div class="widget" style="border:0; margin-bottom:20px;"><a href="'.$link.'&template='.$tpl->id.'&antrag='.$dc->activeRecord->id.'" style="'.$css.'" onclick="if(!confirm(\'Soll die E-Mail wirklich versendet werden?\'))return false;Backend.getScrollOffset()">'.$tpl->buttonname.'</a>';
+				$content .= '<div style="border:0; margin-bottom:20px;"><a href="'.$link.'&template='.$tpl->id.'&antrag='.$dc->activeRecord->id.'" style="'.$css.'" onclick="if(!confirm(\'Soll die E-Mail wirklich versendet werden?\'))return false;Backend.getScrollOffset()">'.$tpl->buttonname.'</a>';
 				$content .= '<p class="tl_help tl_tip" style="font-size:.75rem;" title="">'.$tpl->buttontip.'</p></div>';
 			}
 		}

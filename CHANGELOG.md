@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.2 (2023-07-12)
+
+* Fix: Prüfung ob E-Mail-Adressen gesetzt sind und nicht doppelt, bevor eine Mail rausgeht
+
 ## Version 1.1.1 (2023-07-10)
 
 * Add: tl_fideid.ueber18 -> wird im Formular abgefragt, im Backend wird die Checkbox versteckt

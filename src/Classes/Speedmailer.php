@@ -16,7 +16,7 @@ class Speedmailer extends \Backend
 	{
 
 		if(\Input::get('key') != 'getMailbuttons') return; // Nicht unser Schlüssel
-		
+
 		$antrag_id = \Input::get('antrag'); // ID des Antrags
 		$tpl_id = \Input::get('template'); // ID des Templates
 
@@ -40,73 +40,98 @@ class Speedmailer extends \Backend
 			// Absender "Name <email>" in ein Array $arrFrom aufteilen
 			preg_match('~(?:([^<]*?)\s*)?<(.*)>~', $from, $arrFrom);
 
-			// Empfänger
-			$toStr = $spieler->vorname_person.' '.$spieler->nachname_person.' <'.$spieler->email_person.'>';
-			$to = explode(',', $toStr);
-			$ccStr = $spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>';
-			$cc = explode(',', $ccStr);
-
-			// Führende und abschließende Leerzeichen entfernen, und leere Elemente entfernen
-			$to = array_filter(array_map('trim', $to));
-			$cc = array_filter(array_map('trim', $cc));
-
-			// Adressen validieren, Exception bei ungültiger Adresse
-			if($to && is_array($to))
+			// Empfänger festlegen
+			$to = ''; $cc = '';
+			if($spieler->email_person)
 			{
-				foreach($to as $email)
+				// Auftraggeber-Mail vorhanden
+				$to = explode(',', $spieler->vorname_person.' '.$spieler->nachname_person.' <'.$spieler->email_person.'>');
+				if($spieler->email && $spieler->email != $spieler->email_person)
 				{
-					if(!self::validateEmail($email))
-					{
-						throw new \Exception(sprintf($GLOBALS['TL_LANG']['Fideid']['emailCorrupt'], $email));
-					}
+					// Antragsteller-Mail vorhanden und nicht identisch mit Auftraggeber-Mail
+					$cc = explode(',', $spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
 				}
-			}
-			if($cc && is_array($cc))
-			{
-				foreach($cc as $email)
-				{
-					if(!self::validateEmail($email))
-					{
-						throw new \Exception(sprintf($GLOBALS['TL_LANG']['Fideid']['emailCorrupt'], $email));
-					}
-				}
-			}
-
-			$preview_css = $this->getPreview($antrag_id, $tpl_id, true, $css); // HTML/CSS-Version erstellen
-			$preview_body = $this->getPreview($antrag_id, $tpl_id, false); // Body-Vorschau erstellen
-			$subject = $this->getSubject($antrag_id, $tpl_id, $subject); // Tokens im Betreff ersetzen
-
-			$objEmail->from = $arrFrom[2];
-			$objEmail->fromName = $arrFrom[1];
-			$objEmail->subject = $subject;
-			$objEmail->html = $preview_css;
-			$objEmail->sendCc($cc);
-			$status = $objEmail->sendTo($to);
-			if($status)
-			{
-				// Mail in Datenbank eintragen
-				$set = array
-				(
-					'tstamp'     => time(),
-					'pid'        => $antrag_id,
-					'template'   => $tpl_id,
-					'sent_date'  => time(),
-					'sent_state' => 1,
-					'sent_text'  => $preview_body,
-					'sent_from'  => $from,
-					'sent_to'    => $to,
-					'sent_cc'    => $cc,
-				);
-				$email = \Database::getInstance()->prepare("INSERT INTO tl_fideid_mails %s")
-				                                 ->set($set)
-				                                 ->execute($id);
-				// Email-Versand bestätigen und weiterleiten
-				\Message::addConfirmation('E-Mail versendet');
 			}
 			else
 			{
-				// Email-Versand bestätigen und weiterleiten
-				\Message::addError('E-Mail nicht versendet');
+				// Auftraggeber nicht vorhanden
+				if($spieler->email)
+				{
+					// Antragsteller-Mail vorhanden
+					$to = explode(',', $spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
+				}
+			}
+
+			if($to)
+			{
+				// Mail kann verschickt werden
+				// Führende und abschließende Leerzeichen entfernen, und leere Elemente entfernen
+				$to = array_filter(array_map('trim', $to));
+				if($cc) $cc = array_filter(array_map('trim', $cc));
+
+				// Adressen validieren, Exception bei ungültiger Adresse
+				if($to && is_array($to))
+				{
+					foreach($to as $email)
+					{
+						if(!self::validateEmail($email))
+						{
+							throw new \Exception(sprintf($GLOBALS['TL_LANG']['Fideid']['emailCorrupt'], $email));
+						}
+					}
+				}
+				if($cc && is_array($cc))
+				{
+					foreach($cc as $email)
+					{
+						if(!self::validateEmail($email))
+						{
+							throw new \Exception(sprintf($GLOBALS['TL_LANG']['Fideid']['emailCorrupt'], $email));
+						}
+					}
+				}
+
+				$preview_css = $this->getPreview($antrag_id, $tpl_id, true, $css); // HTML/CSS-Version erstellen
+				$preview_body = $this->getPreview($antrag_id, $tpl_id, false); // Body-Vorschau erstellen
+				$subject = $this->getSubject($antrag_id, $tpl_id, $subject); // Tokens im Betreff ersetzen
+
+				$objEmail->from = $arrFrom[2];
+				$objEmail->fromName = $arrFrom[1];
+				$objEmail->subject = $subject;
+				$objEmail->html = $preview_css;
+				if($cc) $objEmail->sendCc($cc);
+				$status = $objEmail->sendTo($to);
+				if($status)
+				{
+					// Mail in Datenbank eintragen
+					$set = array
+					(
+						'tstamp'     => time(),
+						'pid'        => $antrag_id,
+						'template'   => $tpl_id,
+						'sent_date'  => time(),
+						'sent_state' => 1,
+						'sent_text'  => $preview_body,
+						'sent_from'  => $from,
+						'sent_to'    => $to,
+						'sent_cc'    => $cc,
+					);
+					$email = \Database::getInstance()->prepare("INSERT INTO tl_fideid_mails %s")
+					                                 ->set($set)
+					                                 ->execute($id);
+					// Email-Versand bestätigen und weiterleiten
+					\Message::addConfirmation('E-Mail versendet');
+				}
+				else
+				{
+					// Email-Versand bestätigen und weiterleiten
+					\Message::addError('Fehler '.$status.' beim Versand, E-Mail nicht versendet');
+				}
+			}
+			else
+			{
+				// Kein Empfänger, Mail nicht versenden
+				\Message::addError('Kein Empfänger, E-Mail nicht versendet');
 			}
 
 		}
@@ -225,9 +250,9 @@ class Speedmailer extends \Backend
 	{
 		// Prüfen ob Email im Format "Name <Adresse>" vorliegt, ggfs. $email ändern vor der Validierung
 		preg_match('~(?:([^<]*?)\s*)?<(.*)>~', $email, $result);
-		
+
 		if(isset($result[2])) $email = $result[2];
-		
+
 		return filter_var($email, FILTER_VALIDATE_EMAIL);
 
 	}

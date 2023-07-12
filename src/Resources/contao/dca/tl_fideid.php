@@ -108,14 +108,16 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('antragsteller_ungleich_person'),
-		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},art,nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},verein;{ausweis_legend:hide},ausweis,ausweisbox,elterneinverstaendnis;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
+		'__selector__'                => array('antragsteller_ungleich_person', 'unter18', 'imVerein'),
+		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		'antragsteller_ungleich_person' => 'nachname_person,vorname_person,email_person,'
+		'antragsteller_ungleich_person' => 'nachname_person,vorname_person,email_person',
+		'unter18'                       => 'elterneinverstaendnis,ausweis,ausweisbox',
+		'imVerein'                      => 'verein'
 	),
 
 	// Fields
@@ -174,10 +176,6 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'datepicker'          => true,
 				'tl_class'            => 'w50 wizard'
 			),
-			//'load_callback' => array
-			//(
-			//	array('tl_fideid', 'loadDate')
-			//),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
 		'antragsteller_ungleich_person' => array
@@ -185,7 +183,11 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['antragsteller_ungleich_person'],
 			'inputType'               => 'checkbox',
 			'filter'                  => true,
-			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr m12'),
+			'eval'                    => array
+			(
+				'submitOnChange'      => true, 
+				'tl_class'            => 'clr m12'
+			),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'nachname_person' => array
@@ -375,6 +377,18 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
+		'imVerein' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['imVerein'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array
+			(
+				'submitOnChange'      => true, 
+				'tl_class'            => 'clr m12'
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
 		'verein' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['verein'],
@@ -390,6 +404,18 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'tl_class'            => 'w50'
 			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'unter18' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['unter18'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array
+			(
+				'submitOnChange'      => true, 
+				'tl_class'            => 'clr m12'
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'ausweis' => array
 		(

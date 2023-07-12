@@ -36,9 +36,11 @@ $GLOBALS['TL_LANG']['tl_fideid']['datenschutz_legend'] = 'Datenschutz';
 $GLOBALS['TL_LANG']['tl_fideid']['datenschutz'] = array('Datenweitergabe an die FIDE', 'Der Antragsteller willigt ein, daß der Deutsche Schachbund die Daten an die FIDE weitergibt.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['verein_legend'] = 'Verein';
+$GLOBALS['TL_LANG']['tl_fideid']['imVerein'] = array('Vereinsmitglied', 'Auswählen, wenn der Antragsteller Vereinsmitglied ist');
 $GLOBALS['TL_LANG']['tl_fideid']['verein'] = array('Verein', 'Verein des Antragstellers');
 
-$GLOBALS['TL_LANG']['tl_fideid']['ausweis_legend'] = 'Personalausweis/Geburtsurkunde';
+$GLOBALS['TL_LANG']['tl_fideid']['unter18_legend'] = 'Minderjähriger Antragsteller';
+$GLOBALS['TL_LANG']['tl_fideid']['unter18'] = array('Unter 18 Jahre alt', 'Der Antragsteller ist unter 18 Jahre alt');
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei', 'Datei auswählen');
 $GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'] = array('Vorschau', 'Vorschau und Link zur Datei');
 $GLOBALS['TL_LANG']['tl_fideid']['elterneinverstaendnis'] = array('Zustimmung Erziehungsberechtigte(r)', 'Zustimmung des/der Erziehungsberechtigten liegt vor.');

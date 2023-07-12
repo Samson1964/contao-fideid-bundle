@@ -1,5 +1,11 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.3 (2023-07-12)
+
+* Add: tl_fideid.unter18 -> Antragsteller ist unter 18 Jahre alt
+* Add: tl_fideid.imVerein -> Antragsteller ist Vereinsmitglied
+* Delete: tl_fideid.art -> zum Löschen vormerken, da aufgrund der beiden Checkboxen nicht mehr benötigt
+
 ## Version 1.1.2 (2023-07-12)
 
 * Fix: Prüfung ob E-Mail-Adressen gesetzt sind und nicht doppelt, bevor eine Mail rausgeht

@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.4 (2023-07-16)
+
+* Fix: tl_fideid.ausweis wurde nur angezeigt wenn tl_fideid.unter18 aktiviert war -> bei erwachsenen Vereinslosen natürlich falsch
+
 ## Version 1.1.3 (2023-07-12)
 
 * Add: tl_fideid.unter18 -> Antragsteller ist unter 18 Jahre alt

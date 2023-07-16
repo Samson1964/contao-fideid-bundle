@@ -41,16 +41,15 @@ $GLOBALS['TL_LANG']['tl_fideid']['verein'] = array('Verein', 'Verein des Antrags
 
 $GLOBALS['TL_LANG']['tl_fideid']['unter18_legend'] = 'Minderjähriger Antragsteller';
 $GLOBALS['TL_LANG']['tl_fideid']['unter18'] = array('Unter 18 Jahre alt', 'Der Antragsteller ist unter 18 Jahre alt');
-$GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei', 'Datei auswählen');
-$GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'] = array('Vorschau', 'Vorschau und Link zur Datei');
 $GLOBALS['TL_LANG']['tl_fideid']['elterneinverstaendnis'] = array('Zustimmung Erziehungsberechtigte(r)', 'Zustimmung des/der Erziehungsberechtigten liegt vor.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['turnier_legend'] = 'Turnier';
 $GLOBALS['TL_LANG']['tl_fideid']['turnier'] = array('Turnier', 'Turnier, für das der Antrag gestellt wird.');
 $GLOBALS['TL_LANG']['tl_fideid']['turnierlink'] = array('', 'Link zur FIDE-Seite mit den registrierten Turnieren');
 
-$GLOBALS['TL_LANG']['tl_fideid']['germany_legend'] = 'Länderkennung GER';
-$GLOBALS['TL_LANG']['tl_fideid']['germany'] = array('GER', 'Länderkennung GER für den Antragsteller.');
+$GLOBALS['TL_LANG']['tl_fideid']['file_legend'] = 'Upload';
+$GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei', 'Datei auswählen');
+$GLOBALS['TL_LANG']['tl_fideid']['ausweisbox'] = array('Vorschau', 'Vorschau und Link zur Datei');
 
 $GLOBALS['TL_LANG']['tl_fideid']['bemerkungen_legend'] = 'Bemerkungen/Hinweise';
 $GLOBALS['TL_LANG']['tl_fideid']['bemerkungen'] = array('Bemerkung', 'Bemerkungen des Formularabsenders');

@@ -109,14 +109,14 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('antragsteller_ungleich_person', 'unter18', 'imVerein'),
-		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
+		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{file_legend:hide},ausweis,ausweisbox;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
 		'antragsteller_ungleich_person' => 'nachname_person,vorname_person,email_person',
-		'unter18'                       => 'elterneinverstaendnis,ausweis,ausweisbox',
+		'unter18'                       => 'elterneinverstaendnis',
 		'imVerein'                      => 'verein'
 	),
 

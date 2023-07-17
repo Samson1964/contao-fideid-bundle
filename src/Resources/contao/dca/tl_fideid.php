@@ -137,6 +137,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		'ueber18' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['ueber18'],
+			'filter'                  => false,
 			'eval'                    => array
 			(
 				'isBoolean'           => true
@@ -199,7 +200,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['nachname_person'],
 			'exclude'                 => true,
-			'search'                  => false,
+			'search'                  => true,
 			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'text',
@@ -232,7 +233,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['email_person'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
-			'search'                  => false,
+			'search'                  => true,
 			'sorting'                 => false,
 			'flag'                    => 1,
 			'search'                  => false,
@@ -249,8 +250,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['art'],
 			'exclude'                 => true,
-			'filter'                  => true,
-			'sorting'                 => true,
+			'filter'                  => false,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'select',
 			'options'                 => &$GLOBALS['TL_LANG']['tl_fideid']['art_optionen'],
@@ -284,7 +285,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['vorname'],
 			'exclude'                 => true,
 			'search'                  => true,
-			'sorting'                 => true,
+			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'text',
 			'eval'                    => array
@@ -426,6 +427,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['ausweis'],
 			'exclude'                 => true,
+			'filter'                  => true,
 			'inputType'               => 'fileTree',
 			'eval'                    => array
 			(

@@ -28,4 +28,5 @@ $GLOBALS['TL_LANG']['XPL']['fideid_templates'] = array
 	array('colspan', '<b style="display:inline-block; width:300px;">##bemerkungen##</b> Bemerkungen des Formularabsenders'),
 	array('colspan', '<b style="display:inline-block; width:300px;">##intern##</b> Interne Bemerkungen'),
 	array('colspan', '<b style="display:inline-block; width:300px;">##signatur##</b> Signatur aus System-Einstellungen'),
+	array('colspan', '<b style="display:inline-block; width:300px;">##benutzer_name##</b> Name des aktuellen Backend-Benutzers'),
 );

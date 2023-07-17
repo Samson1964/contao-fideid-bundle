@@ -1,5 +1,10 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.6 (2023-07-17)
+
+* Add: Hilfetext für ##benutzer_name## eingetragen
+* Change: Filter auf Übersichtsseite tl_fideid überarbeitet
+
 ## Version 1.1.5 (2023-07-17)
 
 * Fix: Fehlende Übersetzung tl_fideid.germany

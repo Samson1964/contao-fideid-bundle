@@ -284,6 +284,8 @@ class tl_fideid_mails extends Backend
 			// Text festlegen
 			preg_match('/<body>(.*)<\/body>/s', $tpl->template, $matches); // Body extrahieren
 			$content = \StringUtil::restoreBasicEntities($matches[1]); // [nbsp] und Co. ersetzen
+			// Signatur, Token ##benutzer_name## ersetzen
+			$signatur = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'], array('benutzer_name' => $this->User->name));
 			// Felder den Tokens zuweisen
 			$arrTokens = array
 			(
@@ -312,7 +314,8 @@ class tl_fideid_mails extends Backend
 				'intern'                        => $spieler->intern,
 				'subject'                       => $arrRow['subject'],
 				'content'                       => $arrRow['content'],
-				'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+				'signatur'                      => $signatur,
+				'benutzer_name'                 => $this->User->name,
 			);
 			$arrRow['subject'] = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($arrRow['subject'], $arrTokens);
 			$content = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($content, $arrTokens);
@@ -363,6 +366,8 @@ class tl_fideid_mails extends Backend
 				// Text festlegen
 				preg_match('/<body>(.*)<\/body>/s', $tpl->template, $matches); // Body extrahieren
 				$content = \StringUtil::restoreBasicEntities($matches[1]); // [nbsp] und Co. ersetzen  
+				// Signatur, Token ##benutzer_name## ersetzen
+				$signatur = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'], array('benutzer_name' => $this->User->name));
 				// Felder den Tokens zuweisen
 				$arrTokens = array
 				(
@@ -391,7 +396,8 @@ class tl_fideid_mails extends Backend
 					'intern'                        => $spieler->intern,
 					'subject'                       => $dc->activeRecord->subject,
 					'content'                       => $dc->activeRecord->content,
-					'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+					'signatur'                      => $signatur,
+					'benutzer_name'                 => $this->User->name,
 				);
 				$subject = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($subject, $arrTokens);
 				$subject = '<div class="tl_preview"><b>'.$subject.'</b></div>';

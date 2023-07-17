@@ -5,6 +5,9 @@
  */
 $GLOBALS['TL_LANG']['tl_fideid']['tstamp'] = array('Bearbeitet', 'Datum der letzten Bearbeitung.');
 
+$GLOBALS['TL_LANG']['tl_fideid']['anleitung_legend'] = 'Anleitung';
+$GLOBALS['TL_LANG']['tl_fideid']['anleitung'] = array('Anleitung', 'Ablaufplan von Andreas Klein');
+
 $GLOBALS['TL_LANG']['tl_fideid']['status_legend'] = 'Bearbeitungsstatus';
 $GLOBALS['TL_LANG']['tl_fideid']['status'] = array('Status', 'Status der Bearbeitung auswählen.');
 
@@ -46,6 +49,9 @@ $GLOBALS['TL_LANG']['tl_fideid']['elterneinverstaendnis'] = array('Zustimmung Er
 $GLOBALS['TL_LANG']['tl_fideid']['turnier_legend'] = 'Turnier';
 $GLOBALS['TL_LANG']['tl_fideid']['turnier'] = array('Turnier', 'Turnier, für das der Antrag gestellt wird.');
 $GLOBALS['TL_LANG']['tl_fideid']['turnierlink'] = array('', 'Link zur FIDE-Seite mit den registrierten Turnieren');
+
+$GLOBALS['TL_LANG']['tl_fideid']['germany_legend'] = 'Länderkennung';
+$GLOBALS['TL_LANG']['tl_fideid']['germany'] = array('Deutschland (GER)', 'Länderkennung Deutschland (GER) wird beantragt.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['file_legend'] = 'Upload';
 $GLOBALS['TL_LANG']['tl_fideid']['ausweis'] = array('Datei', 'Datei auswählen');
@@ -123,4 +129,27 @@ $GLOBALS['TL_LANG']['tl_fideid']['imagickNotInstalled'] = 'PDF-Vorschau nicht m�
 $GLOBALS['TL_LANG']['tl_fideid']['emailbox_versendet'] = ' (%s alte E-Mails vorhanden)';
 $GLOBALS['TL_LANG']['tl_fideid']['emailbox_offen'] = ' (%s unversendete E-Mails, %s alte E-Mails vorhanden)';
 $GLOBALS['TL_LANG']['tl_fideid']['emailbox_leer'] = ' (Keine E-Mails vorhanden)';
+
+
+$GLOBALS['TL_LANG']['tl_fideid']['anleitungHilfe'] = '
+Der Ablauf nach Erhalt eines Antrags:
+<ol>
+<li style="list-style-type:decimal; margin-left:20px;">Einverständnis für die Datenweitergabe an die FIDE erklärt?</li>
+<li style="list-style-type:decimal; margin-left:20px;">bei Minderjährigen(*) von den Eltern beantragt?</li>
+<li style="list-style-type:decimal; margin-left:20px;">bei Vereinslosen: Ausweiskopie beigefügt?</li>
+<li style="list-style-type:decimal; margin-left:20px;">bei Ausländern: explizit Länderkennung GER gewünscht?</li>
+<li style="list-style-type:decimal; margin-left:20px;">bei Anträgen für Dritte (bspw. vom Turnierveranstalter): Einverständniserklärung (ggf. der Eltern) liegt vor / wurde gegeben? Und in welcher Form überhaupt?</li>
+<li style="list-style-type:decimal; margin-left:20px;">konkreter Anlass / elogewertetes Turnier angegeben?</li>
+<li style="list-style-type:decimal; margin-left:20px;">vorgegebenes Datenformat korrekt?</li>
+<li style="list-style-type:decimal; margin-left:20px;">Prüfung in Mivis, ob momentan als Mitglied beim DSB gemeldet? Falls nein, zurück zu 3.</li>
+<li style="list-style-type:decimal; margin-left:20px;">Prüfung in Mivis (bei früheren oder aktuellen DSB-Mitgliedern) oder auf fide.com (vor allem bei Vereinslosen), ob ID schon vorhanden (könnte zur Not in 11. abgehandelt werden)</li>
+<li style="list-style-type:decimal; margin-left:20px;">Copy&Paste des Datenstrings auf den FRS, einmal für den Namen, einmal für das Geburtsdatum, ggf. Umstellen des Geschlechts</li>
+<li style="list-style-type:decimal; margin-left:20px;">Prüfung, ob Übereinstimmung mit den vorgeschlagenen Datensätzen</li>
+<li style="list-style-type:decimal; margin-left:20px;">Bestätigung, dass eine neue ID angelegt werden soll</li>
+<li style="list-style-type:decimal; margin-left:20px;">Copy&Paste der erzeugten ID, Einfügen in Mivis, ggf. Eintragen der FIDE-Föderation Germany
+<ol type="a">
+<li style="list-style-type:lower-alpha; margin-left:20px;">Antwortmail an den (Einzel-) Antragsteller, Einfügen der ID</li>
+<li style="list-style-type:lower-alpha; margin-left:20px;">Bei Sammelanträgen: Copy&Paste der letzten angelegten IDs, Antwortmail an Antragsteller</li></ol></li>
+</ol>
+';
 

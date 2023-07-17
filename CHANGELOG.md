@@ -1,5 +1,12 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.1.5 (2023-07-17)
+
+* Fix: Fehlende Übersetzung tl_fideid.germany
+* Add: Name des Backend-Benutzers kann in der Signatur und in den Templates verwendet werden -> Token ##benutzer_name##
+* Fix: Beim Versenden einer E-Mail steht bei Cc "Name <>" -> Antragsteller (Cc) hat keine E-Mail-Adresse
+* Add: tl_fideid.anleitung -> Textfeld mit der Anleitung von Andreas Klein
+
 ## Version 1.1.4 (2023-07-16)
 
 * Fix: tl_fideid.ausweis wurde nur angezeigt wenn tl_fideid.unter18 aktiviert war -> bei erwachsenen Vereinslosen natürlich falsch

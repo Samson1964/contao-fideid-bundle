@@ -9,6 +9,15 @@ class Speedmailer extends \Backend
 {
 
 	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('BackendUser', 'User');
+	}
+
+	/**
 	 * Sofortiges Versenden einer E-Mail
 	 */
 
@@ -154,6 +163,9 @@ class Speedmailer extends \Backend
 		$spieler = \Database::getInstance()->prepare("SELECT * FROM tl_fideid WHERE id = ?")
 		                                   ->execute($spieler_id);
 
+		// Signatur, Token ##benutzer_name## ersetzen
+		$signatur = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'], array('benutzer_name' => $this->User->name));
+
 		$arrTokens = array
 		(
 			'status'                        => $spieler->status,
@@ -181,7 +193,8 @@ class Speedmailer extends \Backend
 			'intern'                        => $spieler->intern,
 			'subject'                       => $tpl->subject,
 			'content'                       => '',
-			'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+			'signatur'                      => $signatur,
+			'benutzer_name'                 => $this->User->name,
 		);
 
 		$content = $tpl->template;
@@ -212,6 +225,9 @@ class Speedmailer extends \Backend
 		$spieler = \Database::getInstance()->prepare("SELECT * FROM tl_fideid WHERE id = ?")
 		                                   ->execute($spieler_id);
 
+		// Signatur, Token ##benutzer_name## ersetzen
+		$signatur = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'], array('benutzer_name' => $this->User->name));
+
 		$arrTokens = array
 		(
 			'status'                        => $spieler->status,
@@ -238,7 +254,8 @@ class Speedmailer extends \Backend
 			'bemerkungen'                   => $spieler->bemerkungen,
 			'intern'                        => $spieler->intern,
 			'subject'                       => $tpl->subject,
-			'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+			'signatur'                      => $signatur,
+			'benutzer_name'                 => $this->User->name,
 		);
 
 		$subject = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($tpl->subject, $arrTokens);

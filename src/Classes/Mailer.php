@@ -9,6 +9,15 @@ class Mailer extends \Backend
 {
 
 	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('BackendUser', 'User');
+	}
+
+	/**
 	 * Versenden einer E-Mail
 	 */
 
@@ -133,19 +142,18 @@ class Mailer extends \Backend
 		}
 
 		// E-Mail-Empfänger festlegen
+		$email_cc = '';
+		$email_bcc = '';
 		if($spieler->antragsteller_ungleich_person)
 		{
 			// Antragsteller und Auftraggeber sind unterschiedlich
 			$email_to = htmlentities($spieler->vorname_person.' '.$spieler->nachname_person.' <'.$spieler->email_person.'>');
-			$email_cc = htmlentities($spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
-			$email_bcc = '';
+			if($spieler->email) $email_cc = htmlentities($spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
 		}
 		else
 		{
 			// Antragsteller und Auftraggeber sind gleich
 			$email_to = htmlentities($spieler->vorname.' '.$spieler->nachname.' <'.$spieler->email.'>');
-			$email_cc = '';
-			$email_bcc = '';
 		}
 
 		$strToken = md5(uniqid(mt_rand(), true));
@@ -225,6 +233,9 @@ class Mailer extends \Backend
 		$spieler = \Database::getInstance()->prepare("SELECT * FROM tl_fideid WHERE id = ?")
 		                                   ->execute($spieler_id);
 
+		// Signatur, Token ##benutzer_name## ersetzen
+		$signatur = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'], array('benutzer_name' => $this->User->name));
+
 		$arrTokens = array
 		(
 			'status'                        => $spieler->status,
@@ -252,7 +263,8 @@ class Mailer extends \Backend
 			'intern'                        => $spieler->intern,
 			'subject'                       => $mail->subject,
 			'content'                       => $mail->content,
-			'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+			'signatur'                      => $signatur,
+			'benutzer_name'                 => $this->User->name,
 		);
 
 		$content = $tpl->template;
@@ -287,6 +299,9 @@ class Mailer extends \Backend
 		$spieler = \Database::getInstance()->prepare("SELECT * FROM tl_fideid WHERE id = ?")
 		                                   ->execute($spieler_id);
 
+		// Signatur, Token ##benutzer_name## ersetzen
+		$signatur = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'], array('benutzer_name' => $this->User->name));
+
 		$arrTokens = array
 		(
 			'status'                        => $spieler->status,
@@ -314,7 +329,8 @@ class Mailer extends \Backend
 			'intern'                        => $spieler->intern,
 			'subject'                       => $mail->subject,
 			'content'                       => $mail->content,
-			'signatur'                      => $GLOBALS['TL_CONFIG']['fideidverwaltung_mailsignatur'],
+			'signatur'                      => $signatur,
+			'benutzer_name'                 => $this->User->name,
 		);
 
 		$subject = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($subject, $arrTokens);

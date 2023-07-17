@@ -109,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('antragsteller_ungleich_person', 'unter18', 'imVerein'),
-		'default'                     => '{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{file_legend:hide},ausweis,ausweisbox;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
+		'default'                     => '{anleitung_legend:hide},anleitung;{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{file_legend:hide},ausweis,ausweisbox;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
 	),
 
 	// Subpalettes
@@ -142,6 +142,11 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'isBoolean'           => true
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'anleitung' => array
+		(
+			'exclude'                 => true,
+			'input_field_callback'    => array('tl_fideid', 'getAnleitung')
 		),
 		'status' => array
 		(
@@ -553,6 +558,19 @@ class tl_fideid extends Backend
 	{
 		parent::__construct();
 		$this->import('BackendUser', 'User');
+	}
+
+	public function getAnleitung(DataContainer $dc)
+	{
+
+		$string = '
+<div class="widget long">
+  <h3 style="margin-bottom:10px;"><label for="ctrl_anleitung">'.$GLOBALS['TL_LANG']['tl_fideid']['anleitung'][0].'</label></h3>
+  <p>'.$GLOBALS['TL_LANG']['tl_fideid']['anleitungHilfe'].'</p>
+  <p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_fideid']['anleitung'][1].'</p>
+</div>';
+
+		return $string;
 	}
 
 	public function getInfobox(DataContainer $dc)

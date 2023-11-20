@@ -96,6 +96,20 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
 				//'button_callback'     => array('tl_fideid', 'deleteArchive')
 			),
+			'toggle' => array
+			(
+				'label'                => &$GLOBALS['TL_LANG']['tl_fideid']['toggle'],
+				'attributes'           => 'onclick="Backend.getScrollOffset()"',
+				'haste_ajax_operation' => array
+				(
+					'field'            => 'form_confirmed',
+					'options'          => array
+					(
+						array('value' => '', 'icon' => 'invisible.svg'),
+						array('value' => '1', 'icon' => 'visible.svg'),
+					),
+				),
+			),
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_fideid']['show'],
@@ -109,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('antragsteller_ungleich_person', 'unter18', 'imVerein'),
-		'default'                     => '{anleitung_legend:hide},anleitung;{status_legend},status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{file_legend:hide},ausweis,ausweisbox;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
+		'default'                     => '{anleitung_legend:hide},anleitung;{status_legend},form_confirmed,status;{infobox_legend:hide},infobox;{formular_legend:hide},formulardatum;{antragsteller_legend},nachname,vorname,titel,geburtsdatum,geschlecht,email;{auftraggeber_legend},antragsteller_ungleich_person;{fide_id_legend:hide},fide_id,nuligalight;{datenschutz_legend:hide},datenschutz;{verein_legend:hide},imVerein;{unter18_legend:hide},unter18;{turnier_legend:hide},turnier,turnierlink;{germany_legend},germany;{file_legend:hide},ausweis,ausweisbox;{bemerkungen_legend},bemerkungen;{intern_legend:hide},intern;{speedmail_legend:hide},speedmail'
 	),
 
 	// Subpalettes
@@ -133,6 +147,25 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'flag'                    => 5,
 			'sorting'                 => true,
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'form_confirmed' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['form_confirmed'],
+			'exclude'                 => true,
+			'filter'                  => true,
+			'default'                 => true,
+			'inputType'               => 'checkbox',
+			'eval'                    => array
+			(
+				'isBoolean'           => true
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'form_token' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['form_token'],
+			'inputType'               => 'text',
+			'sql'                     => "varchar(32) NOT NULL default ''"
 		),
 		'ueber18' => array
 		(
@@ -673,9 +706,21 @@ class tl_fideid extends Backend
 			'4' => '#008000',
 		);
 		// Farbe für Zeile setzen
-		for($x = 0; $x < count($args); $x++)
+		if($row['form_confirmed'])
 		{
-			$args[$x] = '<span style="color:'.$farbe[$row['status']].';">'.$args[$x].'</span>';
+			// Formular wurde bestätigt
+			for($x = 0; $x < count($args); $x++)
+			{
+				$args[$x] = '<span style="color:'.$farbe[$row['status']].';">'.$args[$x].'</span>';
+			}
+		}
+		else
+		{
+			// Formular wurde nicht bestätigt
+			for($x = 0; $x < count($args); $x++)
+			{
+				$args[$x] = '<span style="color:#AEAEAE;">'.$args[$x].'</span>';
+			}
 		}
 
 		// Datensatz komplett zurückgeben

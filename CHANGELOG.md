@@ -1,5 +1,12 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.2.0 (2023-10-12)
+
+* Add: tl_fideid.form_confirmed und tl_fideid.form_token -> Felder für Funktion, das die Formulareingaben per E-Mail-Link bestätigt wurden
+* Add: Klasse FormToken -> Generiert vor dem Formularversand ein Token für die spätere Validierung
+* Add: tl_module für das FE-Modul FormConfirm
+* Add: FE-Modul FormConfirm zur Verifizierung des Tokens vom Antragsformular
+
 ## Version 1.1.6 (2023-07-17)
 
 * Add: Hilfetext für ##benutzer_name## eingetragen

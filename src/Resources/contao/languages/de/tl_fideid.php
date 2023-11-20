@@ -4,6 +4,8 @@
  * Backend-Modul: Übersetzungen im Eingabeformular
  */
 $GLOBALS['TL_LANG']['tl_fideid']['tstamp'] = array('Bearbeitet', 'Datum der letzten Bearbeitung.');
+$GLOBALS['TL_LANG']['tl_fideid']['form_confirmed'] = array('Antrag verifiziert', 'Der Antrag wurde verifiziert.');
+$GLOBALS['TL_LANG']['tl_fideid']['form_token'] = array('Antragstoken', 'Antragstoken, der zur Verifizierung verwendet wird.');
 
 $GLOBALS['TL_LANG']['tl_fideid']['anleitung_legend'] = 'Anleitung';
 $GLOBALS['TL_LANG']['tl_fideid']['anleitung'] = array('Anleitung', 'Ablaufplan von Andreas Klein');
@@ -81,7 +83,7 @@ $GLOBALS['TL_LANG']['tl_fideid']['edit'] = array('Antrag bearbeiten', 'Antrag %s
 $GLOBALS['TL_LANG']['tl_fideid']['emailbox'] = array('Postfach', 'E-Mail-Postfach bearbeiten');
 $GLOBALS['TL_LANG']['tl_fideid']['copy'] = array('Antrag kopieren', 'Antrag %s kopieren');
 $GLOBALS['TL_LANG']['tl_fideid']['delete'] = array('Antrag löschen', 'Antrag %s löschen');
-$GLOBALS['TL_LANG']['tl_fideid']['toggle'] = array('Antrag aktivieren/deaktivieren', 'Antrag %s aktivieren/deaktivieren');
+$GLOBALS['TL_LANG']['tl_fideid']['toggle'] = array('Antrag verifiziert/nicht verifiziert', 'Antrag %s verifiziert/nicht verifiziert');
 $GLOBALS['TL_LANG']['tl_fideid']['show'] = array('Antragsdetails anzeigen', 'Details des Antrags %s anzeigen');
 
 /**

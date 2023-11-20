@@ -23,7 +23,13 @@ $GLOBALS['BE_MOD']['content']['fideid'] = array
 );
 
 /**
+ * Frontend-Module der Linksammlung an Position 1 einfügen
+ */
+$GLOBALS['FE_MOD']['application']['fideid'] = 'Schachbulle\ContaoFideidBundle\Modules\FormConfirm';
+
+/**
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['storeFormData'][] = array('Schachbulle\ContaoFideidBundle\Classes\SaveAusweis', 'storeFormData');
 $GLOBALS['TL_HOOKS']['prepareFormData'][] = array('Schachbulle\ContaoFideidBundle\Classes\CopyEmail', 'prepareFormData');
+$GLOBALS['TL_HOOKS']['prepareFormData'][] = array('Schachbulle\ContaoFideidBundle\Classes\FormToken', 'prepareFormData');

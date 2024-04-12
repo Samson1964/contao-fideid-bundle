@@ -92,19 +92,20 @@ $GLOBALS['TL_LANG']['tl_fideid']['show'] = array('Antragsdetails anzeigen', 'Det
 
 $GLOBALS['TL_LANG']['tl_fideid']['status_optionen'] = array
 (
-	'0' => 'Unbearbeitet',
-	'1' => 'Daten unvollständig',
-	'2' => 'Daten vollständig, FIDE-ID festlegen',
-	'3' => 'FIDE-ID versenden',
-	'4' => 'Fertig',
+	'0' => 'Formular nicht übertragen',
+	'1' => 'Unbearbeitet',
+	'2' => 'Daten unvollständig',
+	'3' => 'Daten vollständig, FIDE-ID festlegen',
+	'4' => 'FIDE-ID versenden',
+	'5' => 'Fertig',
 );
 
 $GLOBALS['TL_LANG']['tl_fideid']['art_optionen'] = array
 (
-	'Mitglied'          => 'Der Antragsteller ist DSB-Vereinsmitglied und über 18 Jahre alt',
-	'Mitglied_u18'      => 'Der Antragsteller ist DSB-Vereinsmitglied und unter 18 Jahre alt',
-	'Kein_Mitglied'     => 'Der Antragsteller ist vereinslos und über 18 Jahre alt',
-	'Kein_Mitglied_u18' => 'Der Antragsteller ist vereinslos und unter 18 Jahre alt',
+	'1' => 'Der Antragsteller ist DSB-Vereinsmitglied und über 18 Jahre alt',
+	'2' => 'Der Antragsteller ist DSB-Vereinsmitglied und unter 18 Jahre alt',
+	'3' => 'Der Antragsteller ist vereinslos und über 18 Jahre alt',
+	'4' => 'Der Antragsteller ist vereinslos und unter 18 Jahre alt',
 );
 
 $GLOBALS['TL_LANG']['tl_fideid']['titel_optionen'] = array

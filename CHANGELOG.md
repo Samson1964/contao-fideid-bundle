@@ -1,5 +1,13 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.3.0 (2024-04-12)
+
+* Add: Bestätigungsseite Antrag in den Einstellungen wählen, wo das entsprechende Modul eingebunden ist
+* Add: Form-Klasse -> soll das externe Formular aus dem Formulargenerator ersetzen
+* Add: MultiForm-Klasse -> verwendet Schachbulle\ContaoHelperBundle\Classes\Form und ersetzt die Form-Klasse (wird nicht verwendet, deshalb löschen)
+* Add: Abhängigkeit schachbulle/contao-helper-bundle
+* Add: Form-Klasse ausgebaut inkl. E-Mail-Verifizierung
+
 ## Version 1.2.0 (2023-10-12)
 
 * Add: tl_fideid.form_confirmed und tl_fideid.form_token -> Felder für Funktion, das die Formulareingaben per E-Mail-Link bestätigt wurden

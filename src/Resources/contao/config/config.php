@@ -23,9 +23,10 @@ $GLOBALS['BE_MOD']['content']['fideid'] = array
 );
 
 /**
- * Frontend-Module der Linksammlung an Position 1 einfügen
+ * Frontend-Module
  */
-$GLOBALS['FE_MOD']['application']['fideid'] = 'Schachbulle\ContaoFideidBundle\Modules\FormConfirm';
+$GLOBALS['FE_MOD']['application']['fideid_form'] = 'Schachbulle\ContaoFideidBundle\Modules\Form';
+$GLOBALS['FE_MOD']['application']['fideid_confirm'] = 'Schachbulle\ContaoFideidBundle\Modules\FormConfirm';
 
 /**
  * Hooks

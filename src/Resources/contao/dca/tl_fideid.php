@@ -148,6 +148,17 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'sorting'                 => true,
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
+		// Speichert das REQUEST_TOKEN aus dem Antragsformular
+		'token' => array
+		(
+			'sql'                     => "varchar(50) NOT NULL default ''"
+		),
+		// 1, wenn das Antragsformular komplett abgearbeitet wurde
+		'form_completely' => array
+		(
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// 1, wenn das Antragsformular per E-Mail via form_token verifiziert wurde
 		'form_confirmed' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['form_confirmed'],
@@ -161,6 +172,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
+		// Token, der für die E-Mail-Bestätigung verwendet wird
 		'form_token' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_fideid']['form_token'],
@@ -188,7 +200,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'exclude'                 => true,
 			'filter'                  => true,
 			'inputType'               => 'select',
-			'options'                 => array(0, 1, 2, 3, 4),
+			'options'                 => array(0, 1, 2, 3, 4, 5),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_fideid']['status_optionen'],
 			'eval'                    => array
 			(
@@ -287,7 +299,8 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 			'sorting'                 => false,
 			'flag'                    => 1,
 			'inputType'               => 'select',
-			'options'                 => &$GLOBALS['TL_LANG']['tl_fideid']['art_optionen'],
+			'options'                 => array(1, 2, 3, 4),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_fideid']['art_optionen'],
 			'eval'                    => array
 			(
 				'mandatory'           => true,
@@ -295,7 +308,7 @@ $GLOBALS['TL_DCA']['tl_fideid'] = array
 				'maxlength'           => 20,
 				'tl_class'            => 'w50'
 			),
-			'sql'                     => "varchar(20) NOT NULL default ''"
+			'sql'                     => "varchar(1) NOT NULL default ''"
 		),
 		'nachname' => array
 		(

@@ -14,4 +14,12 @@
 /**
  * Felder für Ausgabemodul
  */
-$GLOBALS['TL_LANG']['tl_module']['fideid'] = array('FIDE-ID Antragsbestätigung', 'FIDE-ID Antragsbestätigung einbinden');
+$GLOBALS['TL_LANG']['tl_module']['fideid_formtyp'] = array('Formulartyp', 'Typ des FIDE-ID-Antragsformulars festlegen.');
+
+$GLOBALS['TL_LANG']['tl_module']['fideid_formtyp_options'] = array
+(
+	'1' => 'Normaler Antrag (volljährig, DSB-Mitglied)',
+	'2' => 'Einverständniserklärung der Eltern erforderlich (bei Minderjährigen)',
+	'3' => 'Vereinslos und volljährig',
+);
+

@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.3.1 (2024-04-12)
+
+* Fix: Integrity constraint violation: 1048 Column 'userid' cannot be null -> Versionierung von Datensätzen nur im Backend möglich, ist man dort ausgeloggt ist userid = NULL
+
 ## Version 1.3.0 (2024-04-12)
 
 * Add: Bestätigungsseite Antrag in den Einstellungen wählen, wo das entsprechende Modul eingebunden ist

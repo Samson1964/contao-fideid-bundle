@@ -470,7 +470,7 @@ class Form extends \Module
 			$objUpdate = \Database::getInstance()->prepare("UPDATE tl_fideid %s WHERE id=?")
 			                                     ->set($set)
 			                                     ->execute($id);
-			\Controller::createNewVersion('tl_fideid', $id);
+			//\Controller::createNewVersion('tl_fideid', $id); // funktioniert nur im Backend, siehe Version 1.3.1
 		}
 		else
 		{

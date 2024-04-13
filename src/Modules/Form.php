@@ -334,6 +334,12 @@ class Form extends \Module
 			$objForm->addFormField('submit', array('label' => &$GLOBALS['TL_LANG']['fideid-form']['submit_all'], 'inputType' => 'submit', 'eval' => array('class'=>'btn btn-primary')));
 			$objForm->addFormField('reset', array('inputType' => 'explanation',	'eval' => array('text' => '<a href="'.$aktuelleSeite.'?reset_fideidform=1">Formular zurücksetzen</a>', 'class' => '')));
 		}
+		else
+		{
+			// Das Formular ist in einem ungültigen Zustand, wahrscheinlich antrag_seite > 7
+			$content = 'Das Formular hat vom Browser ungültige Parameter bekommen. Mit diesem Link setzen Sie das Formular zurück: <a href="'.$aktuelleSeite.'?reset_fideidform=1">Formular zurücksetzen</a>';
+			return $content;
+		}
 
 		// Validieren und prüfen, ob das Formular gesendet wurde
 		if($objForm->validate())

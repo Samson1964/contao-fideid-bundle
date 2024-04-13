@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.3.2 (2024-04-13)
+
+* Fix: Falls das Formularfeld antrag_seite > 7 ist, wird eine leere Seite angezeigt.
+
 ## Version 1.3.1 (2024-04-12)
 
 * Fix: Integrity constraint violation: 1048 Column 'userid' cannot be null -> Versionierung von Datensätzen nur im Backend möglich, ist man dort ausgeloggt ist userid = NULL

@@ -62,9 +62,9 @@ class FormConfirm extends \Module
 				else
 				{
 					// Version speichern
-					$objVersions = new \Versions('tl_fideid', $objToken->id);
+					//$objVersions = new \Versions('tl_fideid', $objToken->id);
 					//log_message($objToken->id,'log_fideid.log');
-					$objVersions->create();
+					//$objVersions->create();
 					// Datensatz updaten
 					$set = array
 					(

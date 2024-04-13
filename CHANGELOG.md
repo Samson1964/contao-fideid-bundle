@@ -1,5 +1,9 @@
 # DSB-FIDE-ID-Registrierung Changelog
 
+## Version 1.3.3 (2024-04-13)
+
+* Fix: siehe Version 1.3.1 -> ist in FormConfirm noch nicht berücksichtigt worden
+
 ## Version 1.3.2 (2024-04-13)
 
 * Fix: Falls das Formularfeld antrag_seite > 7 ist, wird eine leere Seite angezeigt.
